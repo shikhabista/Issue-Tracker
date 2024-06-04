@@ -1,0 +1,16 @@
+﻿<script >
+    document.addEventListener('DOMContentLoaded', () => {
+        const message = "@TempData["Msg"]";
+        const type = `@TempData["MsgType"]`;
+        toastr.options.closeMethod = 'fadeOut';
+        toastr.options.closeDuration = 300;
+        toastr.options.closeEasing = 'swing';
+        toastr.options.positionClass = 'toast-bottom-right';
+        
+        if (message){
+            if (type === "Success") toastr.success(message);
+            else if (type === "Error") toastr.error(message);
+            else if (type === "Warning") toastr.warning(message);
+        }
+    })
+</script>

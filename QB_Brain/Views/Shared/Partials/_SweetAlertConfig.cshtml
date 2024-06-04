@@ -1,0 +1,29 @@
+﻿<link rel="stylesheet" href="~/dist/sweet-alert-2/sweetalert2.min.css">
+<script src="~/dist/sweet-alert-2/sweetalert2.all.min.js"></script>
+<script >
+    document.addEventListener("DOMContentLoaded", () => {
+                let reqConfirms = document.querySelectorAll(".req-confirm");
+                Array.from(reqConfirms).forEach(item => {
+                    item.addEventListener("click", function(event) {
+                        event.preventDefault();
+            
+                        let message = item.dataset.message;
+                        let url = item.getAttribute("href");
+                        Swal.fire({
+                          title: "Are you sure?",
+                          text: message,
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#3085d6",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Confirm",
+                          timer: 9000
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            window.location.href = url;
+                          }
+                        });
+                    });
+                })
+            })
+</script>

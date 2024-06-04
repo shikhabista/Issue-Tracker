@@ -1,0 +1,17 @@
+﻿.form-label{
+    margin-bottom: 0 !important;
+}
+.h-11{
+    height: 11rem;
+}
+.w-14{
+    width: 14rem;
+}
+
+.image-label{
+    background-color: rgba(215,232,255,0.78);
+}
+
+.form-mw-div > *{
+    min-width: 30rem;
+}

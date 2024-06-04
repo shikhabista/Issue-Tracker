@@ -1,0 +1,93 @@
+﻿@model Base.Dtos.OrganizationDto
+@{
+    ViewBag.Title = "Organization Info";
+    Layout = "_Layout";
+}
+
+<form action="" method="post" enctype="multipart/form-data" id="app">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Organization Info</span>
+        </div>
+        <div class="card-body">
+            <div class="d-flex flex-column gap-2">
+                <div class="d-flex flex-wrap gap-2 form-mw-div">
+                    <div class="col">
+                        <label class="form-label" for="">Name</label>
+                        <input class="form-control" type="text" asp-for="Name">
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="">Address</label>
+                        <input class="form-control" type="text" asp-for="Address">
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="">Phone No</label>
+                        <input class="form-control" type="text" asp-for="PhoneNo">
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="">Email</label>
+                        <input class="form-control" type="text" asp-for="Email">
+                    </div>
+                    <div class="col">
+                        <label class="form-label" for="">Website</label>
+                        <input class="form-control" type="text" asp-for="Website">
+                    </div>
+                </div>
+                <div>
+                    <div class="col">
+                        <div class="position-relative h-11 w-14 overflow-hidden">
+                            <input class="position-absolute opacity-0 h-full" ref="fileRef" type="file" name="file" @@change="onFileChange">
+                            <div v-if="uploadedFileUrl" class="position-absolute w-full bg-gray-50">
+                                <button class="float-end p-0 border-0 bg-transparent" @@click="removeImage">
+                                    <i class="fa-2x fa fa-window-close"></i>
+                                </button>
+                            </div>
+                            <img :src="uploadedFileUrl" v-if="uploadedFileUrl">
+                            <img v-else src="~/images/empty-image.jpg">
+                            <div class="position-absolute bottom-0 w-full text-center image-label">
+                                <strong class="fs-2">Logo</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary"> Save</button>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts
+{
+    <script>
+        const app = Vue.createApp({
+            setup(){
+                const uploadedFileUrl = Vue.ref(`@Model.Logo`);
+                const fileRef = Vue.ref();
+                
+                const onFileChange = (event) => {
+                    const file = event.target.files[0];
+                    if (file) uploadedFileUrl.value = URL.createObjectURL(file);
+                }
+                
+                const removeImage = (event) => {
+                    event.preventDefault();
+                    fileRef.value.value = "";
+                    uploadedFileUrl.value = null;
+                   
+                }
+                    
+                return {
+                    uploadedFileUrl,
+                    onFileChange,
+                    removeImage,
+                    fileRef
+                }
+            }
+        });
+        app.mount("#app");
+    </script>
+}
