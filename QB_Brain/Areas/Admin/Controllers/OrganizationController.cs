@@ -1,9 +1,9 @@
 ﻿using Base.Dtos;
 using Base.Services.Interfaces;
+using IT_Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using QB_Web.Helpers;
 
-namespace QB_Web.Areas.Admin.Controllers;
+namespace IT_Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
 public class OrganizationController : Controller

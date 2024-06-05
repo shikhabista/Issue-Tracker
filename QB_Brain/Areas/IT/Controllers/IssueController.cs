@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace QB_Web.Areas.IT.Controllers;
+namespace IT_Web.Areas.IT.Controllers;
 
 [Area("IT")]
 [Route("[area]/[controller]/[action]")]

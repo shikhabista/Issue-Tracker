@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace QB_Web.Areas.Admin.Controllers;
+namespace IT_Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
 public class HomeController : Controller

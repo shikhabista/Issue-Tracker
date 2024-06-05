@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
-using QB_Web;
-using QB_Web.Configuration;
-using QB_Web.Extensions;
+using IT_Web;
+using IT_Web.Configuration;
+using IT_Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;

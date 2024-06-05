@@ -3,9 +3,9 @@ using Base.Repo.Interfaces;
 using Base.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using QB_Web.Extensions;
+using IT_Web.Extensions;
 
-namespace QB_Web.Areas.Admin.Controllers;
+namespace IT_Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Route("[area]/[controller]/[action]")]

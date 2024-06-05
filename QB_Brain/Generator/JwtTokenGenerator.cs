@@ -3,9 +3,9 @@ using System.Security.Claims;
 using System.Text;
 using Base.Entities;
 using Microsoft.IdentityModel.Tokens;
-using QB_Web.Extensions;
+using IT_Web.Extensions;
 
-namespace QB_Web.Generator;
+namespace IT_Web.Generator;
 
 public interface IJwtTokenGenerator
 {

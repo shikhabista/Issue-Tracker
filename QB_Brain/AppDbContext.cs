@@ -5,7 +5,7 @@ using Base.MigrationHistoryOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace QB_Web;
+namespace IT_Web;
 
 public class AppDbContext(IConfiguration configuration, IHttpContextAccessor httpContextAccessor) : DbContext
 {

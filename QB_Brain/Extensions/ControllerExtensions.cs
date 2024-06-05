@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace QB_Web.Extensions;
+namespace IT_Web.Extensions;
 
 public static class ControllerExtensions
 {

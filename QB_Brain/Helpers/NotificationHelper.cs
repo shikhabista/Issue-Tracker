@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace QB_Web.Helpers;
+namespace IT_Web.Helpers;
 
 public interface INotificationHelper
 {

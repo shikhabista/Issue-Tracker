@@ -1,13 +1,13 @@
 ﻿using Base.Dtos;
 using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
+using IT_Web.Areas.v1.Admin.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using QB_Web.Areas.v1.Admin.Requests;
-using QB_Web.Extensions;
+using IT_Web.Extensions;
 
-namespace QB_Web.Areas.Admin.Controllers;
+namespace IT_Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Route("[area]/[controller]/[action]")]

@@ -1,9 +1,9 @@
 ﻿using Base.Configuration;
+using IT_Web.Generator;
+using IT_Web.Helpers;
 using Microsoft.EntityFrameworkCore;
-using QB_Web.Generator;
-using QB_Web.Helpers;
 
-namespace QB_Web.Configuration;
+namespace IT_Web.Configuration;
 
 public static class DiConfig
 {

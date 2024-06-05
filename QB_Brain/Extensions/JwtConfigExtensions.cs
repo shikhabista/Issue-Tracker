@@ -1,4 +1,4 @@
-﻿namespace QB_Web.Extensions;
+﻿namespace IT_Web.Extensions;
 
 public static class JwtConfigExtensions
 {
