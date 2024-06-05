@@ -20,7 +20,7 @@
         </div>
         <div class="col-3">
             <label class="form-label">Labels</label>
-            <select type="text" class="form-select" placeholder="Select labels" value="">
+            <select type="text" class="form-select" placeholder="Select labels" value="" id="select-tags" multiple>
                 <option value="HTML">HTML</option>
                 <option value="JavaScript">JavaScript</option>
                 <option value="CSS">CSS</option>
@@ -39,27 +39,6 @@
 
 <script>
        
-        document.addEventListener("DOMContentLoaded", function () {
-        var el;
-        window.TomSelect && (new TomSelect(el = document.getElementById('select-tags'), {
-        copyClassesToDropdown: false,
-        dropdownParent: 'body',
-        controlInput: '<input>',
-        render:{
-        item: function(data,escape) {
-        if( data.customProperties ){
-        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-    }
-        return '<div>' + escape(data.text) + '</div>';
-    },
-        option: function(data,escape){
-        if( data.customProperties ){
-        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-    }
-        return '<div>' + escape(data.text) + '</div>';
-    },
-    },
-    }));
-    });
+        document.addEventListener("DOMContentLoaded", function () {new TomSelect(el = document.getElementById('select-tags'))});
        
 </script>
