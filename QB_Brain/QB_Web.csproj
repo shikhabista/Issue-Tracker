@@ -32,6 +32,7 @@
 
     <ItemGroup>
       <Folder Include="Areas\Admin\ViewModels\" />
+      <Folder Include="Areas\IT\Views\" />
       <Folder Include="Content\" />
       <Folder Include="Controllers\" />
       <Folder Include="Middlewares\" />
@@ -43,6 +44,11 @@
       <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\New.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\IT\Views\Issue\Index.cshtml" />
+      <AdditionalFiles Include="Areas\IT\Views\Issue\New.cshtml" />
     </ItemGroup>
 
 </Project>

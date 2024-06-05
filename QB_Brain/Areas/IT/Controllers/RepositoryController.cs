@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace QB_Web.Areas.Admin.Controllers;
+namespace QB_Web.Areas.IT.Controllers;
 
 [Area("IT")]
 [Route("[area]/[controller]/[action]")]
-public class IssueController : Controller
+public class RepositoryController : Controller
 {
-    // GET
     public IActionResult Index()
     {
         return View();

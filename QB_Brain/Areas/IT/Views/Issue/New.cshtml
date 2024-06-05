@@ -1,0 +1,66 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="card">
+    <div class="card-header">
+        <span class="card-title">Create new Issue</span>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-wrap gap-2 form-mw-div">
+                <div class="col">
+                    <label class="form-label required" for="">Add a title</label>
+                    <input class="form-control" type="text" asp-for="Title">
+                </div>
+            </div>
+            <div class="col">
+                <label class="form-label" for="">Add a description</label>
+                <textArea rows="8" class="form-control" type="text" asp-for="Description"></textArea>
+            </div>
+            <div class="col-3">
+                <label class="form-label">Labels</label>
+                <select type="text" class="form-select" placeholder="Select labels" value="">
+                    <option value="HTML">HTML</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="CSS">CSS</option>
+                    <option value="jQuery">jQuery</option>
+                    <option value="Bootstrap">Bootstrap</option>
+                    <option value="Ruby">Ruby</option>
+                    <option value="Python">Python</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary"> Submit</button>
+    </div>
+</div>
+
+<script>
+       
+        document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect && (new TomSelect(el = document.getElementById('select-tags'), {
+        copyClassesToDropdown: false,
+        dropdownParent: 'body',
+        controlInput: '<input>',
+        render:{
+        item: function(data,escape) {
+        if( data.customProperties ){
+        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+    }
+        return '<div>' + escape(data.text) + '</div>';
+    },
+        option: function(data,escape){
+        if( data.customProperties ){
+        return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+    }
+        return '<div>' + escape(data.text) + '</div>';
+    },
+    },
+    }));
+    });
+       
+</script>
