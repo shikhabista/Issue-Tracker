@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Base.Services.Interfaces;
+using IT_Web.Areas.IT.VIewModels;
+using IT_Web.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IT_Web.Areas.IT.Controllers;
 
@@ -6,13 +9,32 @@ namespace IT_Web.Areas.IT.Controllers;
 [Route("[area]/[controller]/[action]")]
 public class IssueController : Controller
 {
-    // GET
-    public IActionResult Index()
+    private readonly ILogger<IssueController> _logger;
+    private IIssueService _issueService;
+
+    public IssueController(ILogger<IssueController> logger, IIssueService issueService)
     {
-        return View();
+        _logger = logger;
+        _issueService = issueService;
     }
 
-    public IActionResult New()
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        try
+        {
+            var report = await _issueService.GetIssueList();
+            return this.SendSuccess("", report);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Error while fetching data");
+            return this.SendError(e.Message);
+        }
+    }
+
+    [HttpPost]
+    public IActionResult New([FromBody] IssueCreateVm model)
     {
         return View();
     }
