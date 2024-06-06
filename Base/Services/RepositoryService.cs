@@ -41,9 +41,8 @@ public class RepositoryService : IRepositoryService
     public async Task<Repository> UpdateRepository(Repository repository)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var repoId = repository.Id;
         await _dbService.EditData(
-            "Update base.repository SET name=@Name, description=@Description, visibility=@Visibility WHERE id=@repoId",
+            "Update base.repository SET name=@Name, description=@Description, visibility=@Visibility WHERE id=@Id",
             repository);
         tx.Complete();
         return repository;
