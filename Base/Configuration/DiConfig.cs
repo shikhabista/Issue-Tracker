@@ -27,6 +27,9 @@ public static class DiConfig
             .AddTransient<IBranchService, BranchService>()
             .AddTransient<IOrganizationRepo, OrganizationRepo>()
             .AddTransient<IOrganizationService, OrganizationService>()
-            ;
+            .AddTransient<IDbService, DbService>()
+            .AddTransient<IIssueService, IssueService>()
+            .AddTransient<IRepositoryService, RepositoryService>()
+            .AddTransient<ILabelService, LabelService>();
     }
 }

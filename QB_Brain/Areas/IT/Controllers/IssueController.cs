@@ -33,8 +33,8 @@ public class IssueController : Controller
         }
     }
 
-    [HttpPost]
-    public IActionResult New([FromBody] IssueCreateVm model)
+    [HttpGet]
+    public IActionResult New()
     {
         return View();
     }
