@@ -20,7 +20,7 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "INSERT INTO base.issue (title, description, issueStatus, date, assigneeId) VALUES (@Name, @Description, @IssueStatus, @Date, @AssigneeId)",
+            "INSERT INTO base.issue (title, description, issueStatus, date, assignee_id) VALUES (@Name, @Description, @IssueStatus, @Date, @AssigneeId)",
             issue);
         tx.Complete();
     }
@@ -45,7 +45,7 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "Update base.issue SET title=@Title, description=@Description, issueStatus=@IssueStatus, date=@Date, assignedId=@AssignedId WHERE id=@Id",
+            "Update base.issue SET title=@Title, description=@Description, issueStatus=@IssueStatus, date=@Date, assigned_id=@AssignedId WHERE id=@Id",
             issue);
         tx.Complete();
         return issue;

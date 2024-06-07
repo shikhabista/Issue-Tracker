@@ -21,16 +21,17 @@ public class IssueController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        try
-        {
-            var report = await _issueService.GetIssueList();
-            return this.SendSuccess("", report);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Error while fetching data");
-            return this.SendError(e.Message);
-        }
+        // try
+        // {
+        //     // var report = await _issueService.GetIssueList();
+        //     return this.SendSuccess("");
+        // }
+        // catch (Exception e)
+        // {
+        //     _logger.LogError("Error while fetching data");
+        //     return this.SendError(e.Message);
+        // }
+        return View();
     }
 
     [HttpGet]
