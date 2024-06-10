@@ -1,3 +1,55 @@
-﻿@{
+﻿@model IT_Web.Areas.IT.VIewModels.RepositoryReportVm
+@{
     Layout = "_Layout";
 }
+
+<div class="page-header d-print-none m-0">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    @* @Model.Name *@ Repository
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Base info</h3>
+            </div>
+            <div class="card-body">
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Registrar</div>
+                        <div class="datagrid-content">Third Party</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Nameservers</div>
+                        <div class="datagrid-content">Third Party</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="card-header">
+                <h3 class="card-title">Base info</h3>
+            </div>
+            <div class="card-body">
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Registrar</div>
+                        <div class="datagrid-content">Third Party</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Nameservers</div>
+                        <div class="datagrid-content">Third Party</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

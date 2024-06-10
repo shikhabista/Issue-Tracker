@@ -19,6 +19,7 @@ public class RepositoryController : Controller
         _repositoryService = repositoryService;
     }
 
+    [HttpGet]
     public IActionResult Index()
     {
         return View();
