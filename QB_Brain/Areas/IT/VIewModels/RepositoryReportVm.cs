@@ -1,6 +1,6 @@
-﻿namespace Base.Entities;
+﻿namespace IT_Web.Areas.IT.VIewModels;
 
-public class Repository : BaseEntity
+public class RepositoryReportVm
 {
     public string Name { get; set; }
     public string? Description { get; set; }

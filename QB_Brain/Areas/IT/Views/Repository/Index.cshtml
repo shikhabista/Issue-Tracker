@@ -1,3 +1,101 @@
-﻿@{
+﻿@model IT_Web.Areas.IT.VIewModels.RepositoryReportVm
+@{
     Layout = "_Layout";
 }
+
+<div class="page-header d-print-none m-0">
+    <div class="container-xl">
+        <div class="row g-2 align-items-center">
+            <div class="col">
+                <h2 class="page-title">
+                    @* @Model.Name *@ Repositories
+                </h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="container-xl">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Repo 1 <span class="badge badge-outline text-cyan ms-2">Active</span></h3>
+            </div>
+            <div class="card-body">
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Branch</div>
+                        <div class="datagrid-content">Master</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">About</div>
+                        <div class="datagrid-content">Repo description</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Issues</div>
+                        <div class="datagrid-content">
+                            <div class="btn-list">
+                                <button class="btn">
+                                    Total Issues
+                                    <span class="badge bg-blue text-blue-fg ms-2">12</span>
+                                </button>
+                                <button class="btn">
+                                    Open Issues
+                                    <span class="badge bg-lime text-lime-fg  ms-2">7</span>
+                                </button>
+                                <button class="btn">
+                                    Closed Issues
+                                    <span class="badge bg-red text-red-fg ms-2">5</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-content">
+                            <button class="btn">Create New Issue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-2">
+            <div class="card-header">
+                <h3 class="card-title">Repo 2 <span class="badge badge-outline text-cyan ms-2">Active</span> </h3>
+            </div>
+            <div class="card-body">
+                <div class="datagrid">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Registrar</div>
+                        <div class="datagrid-content">Master</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">About</div>
+                        <div class="datagrid-content">Repo description</div>
+                    </div>
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">Issues</div>
+                        <div class="datagrid-content">
+                            <div class="btn-list">
+                                <button class="btn">
+                                    Total Issues
+                                    <span class="badge bg-blue text-blue-fg ms-2">12</span>
+                                </button>
+                                <button class="btn">
+                                    Open Issues
+                                    <span class="badge bg-lime text-lime-fg  ms-2">7</span>
+                                </button>
+                                <button class="btn">
+                                    Closed Issues
+                                    <span class="badge bg-red text-red-fg ms-2">5</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

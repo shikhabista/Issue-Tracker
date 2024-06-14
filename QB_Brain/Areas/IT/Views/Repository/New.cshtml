@@ -1,12 +1,13 @@
-﻿@{
+﻿@model IT_Web.Areas.IT.VIewModels.RepositoryCreateVm
+@{
     ViewBag.Title = "New Repository";
     Layout = "_Layout";
 }
-@* <div class="col-md-6"> *@
+
+<form action="" method="post">
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Create New Repository</h3>
-
         </div>
 
         <div class="card-body">
@@ -29,7 +30,7 @@
                 </div>
                 <div>
                     <label class="form-check">
-                        <input class="form-check-input" type="radio" name="radios" checked>
+                        <input class="form-check-input" type="radio" name="radios" asp-for="Visibility" checked>
 
                         <span class="form-check-label">
                             <i>
@@ -66,4 +67,4 @@
             </div>
         </div>
     </div>
-@* </div> *@
+</form>

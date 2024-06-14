@@ -10,4 +10,6 @@ public class Issue : BaseEntity
     public long? AssigneeId { get; set; }
     public IssueStatusEnum IssueStatus { get; set; }
     public DateTime Date { get; set; }
+    public virtual Repository Repository { get; set; }
+    public long RepositoryId { get; set; }
 }
