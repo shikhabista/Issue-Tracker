@@ -24,17 +24,24 @@ public class RepositoryController : Controller
     {
         return View();
     }
+    
+    [HttpGet]
+    public IActionResult New()
+    {
+        return View();
+    }
 
     [HttpPost]
     public async Task<IActionResult> New(RepositoryCreateVm model)
     {
         try
         {
+            // var visibility = model.Visibility ? Repository.Private : Repository.Public;
             var repo = new Repository
             {
                 Name = model.Name,
                 Description = model.Description,
-                Visibility = model.Visibility
+                // Visibility = model./
             };
             await _repositoryService.CreateRepository(repo);
             return this.SendSuccess("");
