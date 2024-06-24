@@ -10,6 +10,10 @@ public static class EntityRegisterer
         builder.Entity<User>();
         builder.Entity<Branch>();
         builder.Entity<Organization>();
+        builder.Entity<Issue>();
+        builder.Entity<Repository>();
+        builder.Entity<Label>();
+        builder.Entity<IssueLabel>();
         return builder;
     }
 }
