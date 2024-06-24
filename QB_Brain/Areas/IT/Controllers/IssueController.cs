@@ -1,6 +1,4 @@
 ﻿using Base.Services.Interfaces;
-using IT_Web.Areas.IT.VIewModels;
-using IT_Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IT_Web.Areas.IT.Controllers;
@@ -37,6 +35,9 @@ public class IssueController : Controller
     [HttpGet]
     public IActionResult New()
     {
+        // if (!ModelState.IsValid) return View();
+        // var labelList = new IssueCreateVm().LabelList.Select(a => new SelectListItem { Value = a.Id, Text = a.Name }).ToList();
+        // IssueCreateVm vm = new IssueCreateVm { LabelList = labelList };
         return View();
     }
 }

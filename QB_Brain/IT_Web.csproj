@@ -32,7 +32,6 @@
 
     <ItemGroup>
       <Folder Include="Areas\Admin\ViewModels\" />
-      <Folder Include="Areas\IT\Views\" />
       <Folder Include="Content\Attachments\" />
       <Folder Include="Controllers\" />
       <Folder Include="Middlewares\" />
