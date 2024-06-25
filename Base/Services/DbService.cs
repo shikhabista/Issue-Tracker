@@ -12,7 +12,7 @@ public class DbService : IDbService
 
     public DbService(IConfiguration configuration)
     {
-        _db = new NpgsqlConnection(configuration.GetConnectionString("issue_tracking"));
+        _db = new NpgsqlConnection(configuration.GetConnectionString("DefaultConnection"));
     }
 
     public async Task<T> GetAsync<T>(string command, object @params)

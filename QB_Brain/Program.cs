@@ -32,9 +32,9 @@ var serviceProvider = services.BuildServiceProvider();
 using var scope = serviceProvider.CreateScope();
 var configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
-/*services.AddDbContext<AppDbContext>(options => options
-    .UseNpgsql(_configuration.GetConnectionString("Default"))
-    .ReplaceService<IHistoryRepository, MigrationHistory>());*/
+services.AddDbContext<AppDbContext>(options => options
+    .UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+    // .ReplaceService<IHistoryRepository, MigrationHistory>());
 
 services.ConfigureApplicationCookie(options =>
 {

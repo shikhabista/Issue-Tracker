@@ -19,8 +19,11 @@
             <label class="form-label" for="">Add a description</label>
             <textarea rows="8" class="form-control" asp-for="Description"></textarea>
         </div>
-        <div class="col-3">
+        <div class="col-6">
             <label class="form-label">Labels</label>
+            @* <select asp-for="LabelId" class="form-select" asp-items="@Model.LabelList"> *@
+            @*     <option value="">Select Labels</option> *@
+            @* </select> *@
             <select type="text" class="form-select" placeholder="Select labels" value="" id="select-tags" multiple>
                 <option value="HTML">HTML</option>
                 <option value="JavaScript">JavaScript</option>

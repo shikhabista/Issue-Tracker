@@ -1,4 +1,5 @@
 ﻿using Base.Services.Interfaces;
+using IT_Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IT_Web.Areas.IT.Controllers;
@@ -8,36 +9,41 @@ namespace IT_Web.Areas.IT.Controllers;
 public class IssueController : Controller
 {
     private readonly ILogger<IssueController> _logger;
-    private IIssueService _issueService;
+    private readonly IIssueService _issueService;
+    private ILabelService _labelService;
 
-    public IssueController(ILogger<IssueController> logger, IIssueService issueService)
+    public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService)
     {
         _logger = logger;
         _issueService = issueService;
+        _labelService = labelService;
     }
 
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        // try
-        // {
-        //     // var report = await _issueService.GetIssueList();
-        //     return this.SendSuccess("");
-        // }
-        // catch (Exception e)
-        // {
-        //     _logger.LogError("Error while fetching data");
-        //     return this.SendError(e.Message);
-        // }
+        try
+        {
+            var report = await _issueService.GetIssueList();
+            return this.SendSuccess("", report);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Error while fetching data");
+            return this.SendError(e.Message);
+        }
         return View();
     }
 
     [HttpGet]
-    public IActionResult New()
+    public async Task<IActionResult> New()
     {
         // if (!ModelState.IsValid) return View();
-        // var labelList = new IssueCreateVm().LabelList.Select(a => new SelectListItem { Value = a.Id, Text = a.Name }).ToList();
-        // IssueCreateVm vm = new IssueCreateVm { LabelList = labelList };
+        // var labels = await _labelService.GetLabelList();
+        // var vm = new IssueCreateVm
+        // {
+        //     LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name))
+        // };
         return View();
     }
 }

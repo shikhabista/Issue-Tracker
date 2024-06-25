@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using Base.Dtos.IT;
 using Base.Entities;
 using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
@@ -25,18 +26,18 @@ public class IssueService : IIssueService
         tx.Complete();
     }
 
-    public async Task<Issue> GetIssue(long id)
+    public async Task<IssueDto> GetIssue(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var issue = await _dbService.GetAsync<Issue>("SELECT * FROM base.issue where id=@id", new { id });
+        var issue = await _dbService.GetAsync<IssueDto>("SELECT * FROM base.issue where id=@id", new { id });
         tx.Complete();
         return issue;
     }
 
-    public async Task<List<Issue>> GetIssueList()
+    public async Task<List<IssueDto>> GetIssueList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var issueList = await _dbService.GetAll<Issue>("SELECT * FROM base.issue", new { });
+        var issueList = await _dbService.GetAll<IssueDto>("SELECT * FROM base.issue", new { });
         tx.Complete();
         return issueList;
     }

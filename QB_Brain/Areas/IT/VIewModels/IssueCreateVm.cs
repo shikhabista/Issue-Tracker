@@ -1,10 +1,14 @@
-﻿namespace IT_Web.Areas.IT.VIewModels;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace IT_Web.Areas.IT.VIewModels;
 
 public class IssueCreateVm
 {
     public string Title { get; set; }
     public string Description { get; set; }
-    public List<Labels> LabelList { get; set; }
+    
+    public long LabelId { get; set; }
+    public SelectList LabelList { get; set; }
 }
 
 public class Labels
