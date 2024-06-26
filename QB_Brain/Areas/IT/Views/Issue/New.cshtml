@@ -21,7 +21,7 @@
         </div>
         <div class="col-6">
             <label class="form-label">Labels</label>
-            <select asp-for="LabelIds" class="form-select" asp-items="@Model.LabelList">
+            <select asp-for="LabelIds" class="form-select" asp-items="@Model.LabelList" id="select-tags" multiple>
                 <option value="">Select Labels</option>
             </select>
             @* <select type="text" class="form-select" placeholder="Select labels" value="" id="select-tags" multiple> *@

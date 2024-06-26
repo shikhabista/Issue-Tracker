@@ -4,66 +4,58 @@
     Layout = "_Layout";
 }
 
-<div class="card">
-    <div class="card-header">
-        <span class="card-title">Create new Label</span>
-    </div>
+<form asp-controller="Label" method="post">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Create new Label</span>
+        </div>
 
-    <div class="card-body">
-        <div class="row">
-            <div class="col-3">
-                <label class="form-label required" for="">Name</label>
-                <input class="form-control" type="text" asp-for="Name" placeholder="Label name">
-            </div>
-            <div class="col-3">
-                <label class="form-label" for="">Description</label>
-                <input class="form-control" type="text" asp-for="Description" placeholder="Description (optional)">
-            </div>
-            <div class="col-3">
-                <label class="form-label required" for="">Code</label>
-                <input class="form-control" type="text" asp-for="Code" placeholder="Label code">
-            </div>
-            <div class="col-3 mt-3">
-                <button type="submit" class="btn btn-primary"> Create Label</button>
-                <button type="submit" class="btn btn-primary ml"> Cancel</button>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <label class="form-label required" for="">Name</label>
+                    <input class="form-control" type="text" asp-for="Name" placeholder="Label name">
+                </div>
+                <div class="col-3">
+                    <label class="form-label" for="">Description</label>
+                    <input class="form-control" type="text" asp-for="Description" placeholder="Description (optional)">
+                </div>
+                <div class="col-3">
+                    <label class="form-label required" for="">Code</label>
+                    <input class="form-control" type="text" asp-for="Code" placeholder="Label code">
+                </div>
+                <div class="col-3 mt-3">
+                    <button type="submit" class="btn btn-primary" asp-action="New"> Create Label</button>
+                    <button type="submit" class="btn btn-primary ml"> Cancel</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+    <div class="card mt-3">
+        <div class="card-header">
+            <span class="card-title">Labels</span>
+        </div>
 
-<div class="card mt-3">
-    <div class="card-header">
-        <span class="card-title">Labels</span>
-    </div>
-
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table card-table table-vcenter text-nowrap datatable">
-                <tbody>
-                <tr>
-                    @* @foreach (var item in Model.Labels) *@
-                    @* { *@
-                    @*     <td>@item.Name</td> *@
-                    @*     <td>@item.Description</td> *@
-                    @*     <td>@item.Code</td> *@
-                    @*     <td> *@
-                    @*         <span class=" btn-list flex gap-3"> *@
-                    @*             <a href="#">Edit</a> <a href="#">Delete</a> *@
-                    @*         </span> *@
-                    @*     </td> *@
-                    @* } *@
-
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Code</td>
-                    <td>
-                        <span class=" btn-list flex gap-3">
-                            <a href="#">Edit</a> <a href="#">Delete</a>
-                        </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap datatable">
+                    <tbody>
+                    <tr>
+                        @foreach (var item in Model.Labels)
+                        {
+                            <td><span class="badge bg-azure-lt"> @item.Name</span></td>
+                            <td>@item.Description</td>
+                            <td>@item.Code</td>
+                            <td>
+                                <span class=" btn-list flex gap-3">
+                                    <a href="#">Edit</a> <a href="#">Delete</a>
+                                </span>
+                            </td>
+                        }
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>

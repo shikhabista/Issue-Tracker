@@ -17,7 +17,8 @@ public class LabelService : ILabelService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "INSERT INTO base.repository (name, code) VALUES (@Name, @Code)",
+            "INSERT INTO it.label (name,description, code, status, rec_date) " +
+            "VALUES (@Name, @Description, @Code, @Status, @RecDate)",
             label);
         tx.Complete();
     }
@@ -25,7 +26,7 @@ public class LabelService : ILabelService
     public async Task<Label> GetLabel(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var label = await _dbService.GetAsync<Label>("SELECT * FROM base.label where id=@id", new { id });
+        var label = await _dbService.GetAsync<Label>("SELECT * FROM it.label where id=@id", new { id });
         tx.Complete();
         return label;
     }
@@ -33,7 +34,7 @@ public class LabelService : ILabelService
     public async Task<List<Label>> GetLabelList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var labelList = await _dbService.GetAll<Label>("SELECT * FROM public.label", new { });
+        var labelList = await _dbService.GetAll<Label>("SELECT * FROM it.label", new { });
         tx.Complete();
         return labelList;
     }
@@ -42,7 +43,7 @@ public class LabelService : ILabelService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "Update base.label SET name=@Name, code=@Code WHERE id=@Id",
+            "Update it.label SET name=@Name, description=@Description, code=@Code WHERE id=@Id",
             label);
         tx.Complete();
         return label;
@@ -51,7 +52,7 @@ public class LabelService : ILabelService
     public async Task<bool> DeleteLabel(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData("DELETE FROM base.label WHERE id=@Id", new {id});
+        await _dbService.EditData("DELETE FROM it.label WHERE id=@Id", new {id});
         tx.Complete();
         return true;
     }

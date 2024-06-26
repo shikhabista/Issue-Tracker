@@ -35,7 +35,6 @@ public class IssueController : Controller
             _logger.LogError("Error while fetching data");
             return this.SendError(e.Message);
         }
-        return View();
     }
 
     [HttpGet]

@@ -21,7 +21,8 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "INSERT INTO public.issue (title, description, issueStatus, date,repository_id, assignee_id) VALUES (@Name, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId)",
+            "INSERT INTO it.issue (title, description, issueStatus, date,repository_id, assignee_id, last_updated) " +
+            "VALUES (@Name, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId, @LastUpdated)",
             issue);
         tx.Complete();
     }
@@ -29,7 +30,7 @@ public class IssueService : IIssueService
     public async Task<IssueDto> GetIssue(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var issue = await _dbService.GetAsync<IssueDto>("SELECT * FROM base.issue where id=@id", new { id });
+        var issue = await _dbService.GetAsync<IssueDto>("SELECT * FROM it.issue where id=@id", new { id });
         tx.Complete();
         return issue;
     }
@@ -37,7 +38,7 @@ public class IssueService : IIssueService
     public async Task<List<IssueDto>> GetIssueList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var issueList = await _dbService.GetAll<IssueDto>("SELECT * FROM public.issue", new { });
+        var issueList = await _dbService.GetAll<IssueDto>("SELECT * FROM it.issue", new { });
         tx.Complete();
         return issueList;
     }
@@ -46,7 +47,8 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "Update base.issue SET title=@Title, description=@Description, issueStatus=@IssueStatus, date=@Date, assigned_id=@AssignedId WHERE id=@Id",
+            "Update it.issue SET title=@Title, description=@Description, issueStatus=@IssueStatus, date=@Date, " +
+            "assigned_id=@AssignedId, repository_id=@RepositoryId, last_updated = @LastUpdated  WHERE id=@Id",
             issue);
         tx.Complete();
         return issue;
@@ -55,7 +57,7 @@ public class IssueService : IIssueService
     public async Task<bool> DeleteIssue(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData("DELETE FROM base.issue WHERE id=@Id", new { id });
+        await _dbService.EditData("DELETE FROM it.issue WHERE id=@Id", new { id });
         tx.Complete();
         return true;
     }
