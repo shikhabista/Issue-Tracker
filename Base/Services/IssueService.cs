@@ -21,7 +21,7 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "INSERT INTO base.issue (title, description, issueStatus, date,repository_id, assignee_id) VALUES (@Name, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId)",
+            "INSERT INTO public.issue (title, description, issueStatus, date,repository_id, assignee_id) VALUES (@Name, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId)",
             issue);
         tx.Complete();
     }
@@ -37,7 +37,7 @@ public class IssueService : IIssueService
     public async Task<List<IssueDto>> GetIssueList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var issueList = await _dbService.GetAll<IssueDto>("SELECT * FROM base.issue", new { });
+        var issueList = await _dbService.GetAll<IssueDto>("SELECT * FROM public.issue", new { });
         tx.Complete();
         return issueList;
     }

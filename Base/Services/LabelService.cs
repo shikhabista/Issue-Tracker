@@ -33,7 +33,7 @@ public class LabelService : ILabelService
     public async Task<List<Label>> GetLabelList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var labelList = await _dbService.GetAll<Label>("SELECT * FROM base.label", new { });
+        var labelList = await _dbService.GetAll<Label>("SELECT * FROM public.label", new { });
         tx.Complete();
         return labelList;
     }

@@ -1,6 +1,9 @@
-﻿using Base.Services.Interfaces;
+﻿using Base.Entities;
+using Base.Services.Interfaces;
+using IT_Web.Areas.IT.VIewModels;
 using IT_Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace IT_Web.Areas.IT.Controllers;
 
@@ -38,12 +41,12 @@ public class IssueController : Controller
     [HttpGet]
     public async Task<IActionResult> New()
     {
-        // if (!ModelState.IsValid) return View();
-        // var labels = await _labelService.GetLabelList();
-        // var vm = new IssueCreateVm
-        // {
-        //     LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name))
-        // };
-        return View();
+        if (!ModelState.IsValid) return View();
+        var labels = await _labelService.GetLabelList();
+        var vm = new IssueCreateVm
+        {
+            LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name))
+        };
+        return View(vm);
     }
 }

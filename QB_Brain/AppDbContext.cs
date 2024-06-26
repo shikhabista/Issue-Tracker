@@ -13,7 +13,7 @@ public class AppDbContext(IConfiguration configuration, IHttpContextAccessor htt
     {
         base.OnConfiguring(optionsBuilder);
         optionsBuilder
-            .UseNpgsql(configuration.GetConnectionString("Default"))
+            .UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
             .ReplaceService<IHistoryRepository, MigrationHistory>();
         optionsBuilder.UseSnakeCaseNamingConvention();
         optionsBuilder.UseLazyLoadingProxies();
