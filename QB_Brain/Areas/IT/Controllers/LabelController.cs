@@ -20,12 +20,6 @@ public class LabelController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    [HttpGet]
     public async Task<IActionResult> New()
     {
         try
