@@ -222,7 +222,7 @@ namespace IT_Web.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<long>("RecById")
+                    b.Property<long?>("RecById")
                         .HasColumnType("bigint")
                         .HasColumnName("rec_by_id");
 
@@ -359,8 +359,6 @@ namespace IT_Web.Migrations
                     b.HasOne("Base.Entities.User", "RecBy")
                         .WithMany()
                         .HasForeignKey("RecById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_repository_user_rec_by_id");
 
                     b.Navigation("RecBy");

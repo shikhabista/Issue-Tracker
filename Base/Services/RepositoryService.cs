@@ -17,7 +17,7 @@ public class RepositoryService : IRepositoryService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "INSERT INTO it.repository (name, description, visibility, rec_by_id, rec_date) VALUES (@Name, @Description, @Visibility, @RecById, @RecDate)",
+            "INSERT INTO it.repository (name, description, visibility, rec_by_id, rec_date, status) VALUES (@Name, @Description, @Visibility, @RecById, @RecDate, @Status)",
             repo);
         tx.Complete();
     }

@@ -1,8 +1,10 @@
 ﻿using Base.Entities;
+using Base.Extensions;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels;
 using IT_Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace IT_Web.Areas.IT.Controllers;
 
@@ -22,6 +24,15 @@ public class RepositoryController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error");
+            return this.SendError(e.Message);
+        }
         return View();
     }
     
@@ -36,12 +47,14 @@ public class RepositoryController : Controller
     {
         try
         {
-            // var visibility = model.Visibility ? Repository.Private : Repository.Public;
+            var visibility = model.IsPrivate != null ? Repository.Private : Repository.Public;
             var repo = new Repository
             {
                 Name = model.Name,
                 Description = model.Description,
-                // Visibility = model./
+                Visibility = visibility,
+                RecDate = DateTime.Now,
+                Status = StatusEnum.Active
             };
             await _repositoryService.CreateRepository(repo);
             return this.SendSuccess("");

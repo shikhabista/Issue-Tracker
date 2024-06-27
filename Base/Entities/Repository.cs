@@ -13,7 +13,7 @@ public class Repository
     public string? Description { get; set; }
     public string Visibility { get; set; }
     public StatusEnum Status { get; set; } = StatusEnum.Active;
-    public virtual User RecBy { get; set; }
-    public long RecById { get; set; }
+    public virtual User? RecBy { get; set; }
+    public long? RecById { get; set; }
     public DateTime RecDate { get; set; }
 }

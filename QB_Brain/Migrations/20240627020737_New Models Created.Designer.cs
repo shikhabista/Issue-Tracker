@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IT_Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240626025411_New Models Added")]
-    partial class NewModelsAdded
+    [Migration("20240627020737_New Models Created")]
+    partial class NewModelsCreated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,7 +225,7 @@ namespace IT_Web.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<long>("RecById")
+                    b.Property<long?>("RecById")
                         .HasColumnType("bigint")
                         .HasColumnName("rec_by_id");
 
@@ -362,8 +362,6 @@ namespace IT_Web.Migrations
                     b.HasOne("Base.Entities.User", "RecBy")
                         .WithMany()
                         .HasForeignKey("RecById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_repository_user_rec_by_id");
 
                     b.Navigation("RecBy");
