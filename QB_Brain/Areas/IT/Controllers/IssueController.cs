@@ -1,4 +1,5 @@
 ﻿using Base.Entities;
+using Base.Enums;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels;
 using IT_Web.Extensions;
@@ -13,7 +14,7 @@ public class IssueController : Controller
 {
     private readonly ILogger<IssueController> _logger;
     private readonly IIssueService _issueService;
-    private ILabelService _labelService;
+    private readonly ILabelService _labelService;
 
     public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService)
     {
@@ -47,5 +48,29 @@ public class IssueController : Controller
             LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name))
         };
         return View(vm);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> New(IssueCreateVm vm)
+    {
+        try
+        {
+            var issue = new Issue
+            {
+                Title = vm.Title,
+                Description = vm.Description,
+                IssueStatus = IssueStatusEnum.Open,
+                Date = DateTime.Now,
+                RepositoryId = vm.RepositoryId,
+                LastUpdated = DateTime.Now
+            };
+            await _issueService.CreateIssue(issue);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error");
+            return this.SendError(e.Message);
+        }
     }
 }

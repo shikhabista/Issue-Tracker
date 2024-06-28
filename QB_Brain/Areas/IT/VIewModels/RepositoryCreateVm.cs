@@ -1,4 +1,6 @@
-﻿namespace IT_Web.Areas.IT.VIewModels;
+﻿using Base.Entities;
+
+namespace IT_Web.Areas.IT.VIewModels;
 
 public class RepositoryCreateVm
 {

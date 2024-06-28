@@ -32,30 +32,34 @@
         </div>
     </div>
 </form>
-    <div class="card mt-3">
-        <div class="card-header">
-            <span class="card-title">Labels</span>
-        </div>
+<div class="card mt-3">
+    <div class="card-header">
+        <span class="card-title">Labels</span>
+    </div>
 
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap datatable">
-                    <tbody>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table card-table table-vcenter text-nowrap datatable">
+                <tbody>
+                @foreach (var item in Model.Labels)
+                {
                     <tr>
-                        @foreach (var item in Model.Labels)
-                        {
-                            <td><span class="badge bg-azure-lt"> @item.Name</span></td>
-                            <td>@item.Description</td>
-                            <td>@item.Code</td>
-                            <td>
-                                <span class=" btn-list flex gap-3">
-                                    <a href="#">Edit</a> <a href="#">Delete</a>
-                                </span>
-                            </td>
-                        }
+
+                        <td>
+                            <span class="badge bg-azure-lt"> @item.Name</span>
+                        </td>
+                        <td>@item.Description</td>
+                        <td>@item.Code</td>
+                        <td>
+                            <span class=" btn-list flex gap-3">
+                                <a href="#">Edit</a> <a href="#">Delete</a>
+                            </span>
+                        </td>
+
                     </tr>
-                    </tbody>
-                </table>
-            </div>
+                }
+                </tbody>
+            </table>
         </div>
     </div>
+</div>

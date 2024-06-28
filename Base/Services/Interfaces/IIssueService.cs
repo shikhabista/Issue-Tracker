@@ -10,4 +10,5 @@ public interface IIssueService
     Task<List<IssueDto>> GetIssueList();
     Task<Issue> UpdateIssue(Issue issue);
     Task<bool> DeleteIssue(long id);
+    Task<List<IssueDto>> GetIssuesOf(long repoId);
 }

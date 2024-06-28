@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IT_Web.Migrations
 {
     /// <inheritdoc />
-    public partial class NewModelsCreated : Migration
+    public partial class NewModelsAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,7 +45,8 @@ namespace IT_Web.Migrations
                     visibility = table.Column<string>(type: "text", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
                     rec_by_id = table.Column<long>(type: "bigint", nullable: true),
-                    rec_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    rec_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    branch = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {

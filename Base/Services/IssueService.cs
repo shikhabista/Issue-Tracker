@@ -1,8 +1,12 @@
-﻿using System.Transactions;
+﻿using System.Data;
+using System.Transactions;
 using Base.Dtos.IT;
 using Base.Entities;
+using Base.Enums;
 using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
+using Dapper;
+using Npgsql;
 
 namespace Base.Services;
 
@@ -10,11 +14,14 @@ public class IssueService : IIssueService
 {
     private readonly IDbService _dbService;
     private IUserRepo _userRepo;
+    private readonly IDbConnection _db;
 
-    public IssueService(IDbService dbService, IUserRepo userRepo)
+
+    public IssueService(IDbService dbService, IUserRepo userRepo, IDbConnection db)
     {
         _dbService = dbService;
         _userRepo = userRepo;
+        _db = db;
     }
 
     public async Task CreateIssue(Issue issue)
@@ -60,5 +67,18 @@ public class IssueService : IIssueService
         await _dbService.EditData("DELETE FROM it.issue WHERE id=@Id", new { id });
         tx.Complete();
         return true;
+    }
+
+    public async Task<List<IssueDto>> GetIssuesOf(long repositoryId)
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        var query = $"select * from it.issue where repository_id = @repositoryId;";
+        var list = (await _dbService.GetAll<IssueDto>(query, new
+        {
+            repositoryId
+        })).ToList();
+
+        return list;
+       
     }
 }

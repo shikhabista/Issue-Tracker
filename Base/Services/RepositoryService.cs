@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using Base.Dtos;
 using Base.Entities;
 using Base.Services.Interfaces;
 
@@ -17,7 +18,7 @@ public class RepositoryService : IRepositoryService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "INSERT INTO it.repository (name, description, visibility, rec_by_id, rec_date, status) VALUES (@Name, @Description, @Visibility, @RecById, @RecDate, @Status)",
+            "INSERT INTO it.repository (name, description, visibility, rec_by_id, rec_date, status, branch) VALUES (@Name, @Description, @Visibility, @RecById, @RecDate, @Status, @Branch)",
             repo);
         tx.Complete();
     }
@@ -30,10 +31,10 @@ public class RepositoryService : IRepositoryService
         return repository;
     }
 
-    public async Task<List<Repository>> GetRepositoryList()
+    public async Task<List<RepositoryDto>> GetRepositoryList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var repositoryList = await _dbService.GetAll<Repository>("SELECT * FROM it.repository", new { });
+        var repositoryList = await _dbService.GetAll<RepositoryDto>("SELECT * FROM it.repository", new { });
         tx.Complete();
         return repositoryList;
     }

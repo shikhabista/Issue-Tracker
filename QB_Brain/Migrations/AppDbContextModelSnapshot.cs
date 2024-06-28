@@ -213,6 +213,11 @@ namespace IT_Web.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
+                    b.Property<string>("Branch")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("branch");
+
                     b.Property<string>("Description")
                         .HasColumnType("text")
                         .HasColumnName("description");

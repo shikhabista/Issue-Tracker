@@ -48,7 +48,7 @@ public class LabelController : Controller
                 RecDate = DateTime.Now
             };
             await _labelService.CreateLabel(label);
-            return View();
+            return RedirectToAction(nameof(New));
         }
         catch (Exception e)
         {

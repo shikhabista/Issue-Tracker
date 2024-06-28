@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IT_Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240627020737_New Models Created")]
-    partial class NewModelsCreated
+    [Migration("20240628110356_New Models Added")]
+    partial class NewModelsAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -215,6 +215,11 @@ namespace IT_Web.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Branch")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("branch");
 
                     b.Property<string>("Description")
                         .HasColumnType("text")

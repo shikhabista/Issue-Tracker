@@ -1,8 +1,17 @@
-﻿namespace IT_Web.Areas.IT.VIewModels;
+﻿using Base.Dtos;
+using Base.Entities;
+
+namespace IT_Web.Areas.IT.VIewModels;
 
 public class RepositoryReportVm
 {
+    public long RepositoryId { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
     public string Visibility { get; set; }
+    public string Branch { get; set; }
+    public long TotalIssuesCount { get; set; }
+    public long TotalOpenIssuesCount { get; set; }
+    public long TotalClosedIssuesCount { get; set; }
+    public List<RepositoryDto> RepositoryList { get; set; }
 }

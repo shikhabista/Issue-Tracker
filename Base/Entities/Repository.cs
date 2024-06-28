@@ -16,4 +16,5 @@ public class Repository
     public virtual User? RecBy { get; set; }
     public long? RecById { get; set; }
     public DateTime RecDate { get; set; }
+    public string Branch { get; set; }
 }

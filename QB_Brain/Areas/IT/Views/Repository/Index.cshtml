@@ -8,7 +8,7 @@
         <div class="row g-2 align-items-center">
             <div class="col">
                 <h2 class="page-title">
-                    @* @Model.Name *@ Repositories
+                    Repositories
                 </h2>
             </div>
         </div>
@@ -17,85 +17,56 @@
 
 <div class="page-body">
     <div class="container-xl">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Repo 1 <span class="badge badge-outline text-cyan ms-2">Active</span></h3>
-            </div>
-            <div class="card-body">
-                <div class="datagrid">
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">Branch</div>
-                        <div class="datagrid-content">Master</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">About</div>
-                        <div class="datagrid-content">Repo description</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">Issues</div>
-                        <div class="datagrid-content">
-                            <div class="btn-list">
-                                <button class="btn">
-                                    Total Issues
-                                    <span class="badge bg-blue text-blue-fg ms-2">12</span>
-                                </button>
-                                <button class="btn">
-                                    Open Issues
-                                    <span class="badge bg-lime text-lime-fg  ms-2">7</span>
-                                </button>
-                                <button class="btn">
-                                    Closed Issues
-                                    <span class="badge bg-red text-red-fg ms-2">5</span>
-                                </button>
+        @foreach (var item in Model.RepositoryList)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        @item.Name <span class="badge badge-outline text-cyan ms-2"> @item.Visibility </span>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="datagrid">
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Branch</div>
+                            <div class="datagrid-content">@item.Branch</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">About</div>
+                            <div class="datagrid-content"> @item.Description</div>
+                        </div>
+                        <div class="datagrid-item">
+                            <div class="datagrid-title">Issues</div>
+                            <div class="datagrid-content">
+                                <div class="btn-list">
+                                    <button class="btn">
+                                        Total Issues
+                                        <span class="badge bg-blue text-blue-fg ms-2">@Model.TotalIssuesCount</span>
+                                    </button>
+                                    <button class="btn">
+                                        Open Issues
+                                        <span class="badge bg-lime text-lime-fg  ms-2">@Model.TotalOpenIssuesCount</span>
+                                    </button>
+                                    <button class="btn">
+                                        Closed Issues
+                                        <span class="badge bg-red text-red-fg ms-2">@Model.TotalClosedIssuesCount</span>
+                                    </button>
 
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="datagrid">
-                    <div class="datagrid-item">
-                        <div class="datagrid-content">
-                            <a class="btn" asp-action="New" asp-controller="Issue" asp-area="IT">Create New Issue</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card mt-2">
-            <div class="card-header">
-                <h3 class="card-title">Repo 2 <span class="badge badge-outline text-cyan ms-2">Active</span> </h3>
-            </div>
-            <div class="card-body">
-                <div class="datagrid">
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">Registrar</div>
-                        <div class="datagrid-content">Master</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">About</div>
-                        <div class="datagrid-content">Repo description</div>
-                    </div>
-                    <div class="datagrid-item">
-                        <div class="datagrid-title">Issues</div>
-                        <div class="datagrid-content">
-                            <div class="btn-list">
-                                <button class="btn">
-                                    Total Issues
-                                    <span class="badge bg-blue text-blue-fg ms-2">12</span>
-                                </button>
-                                <button class="btn">
-                                    Open Issues
-                                    <span class="badge bg-lime text-lime-fg  ms-2">7</span>
-                                </button>
-                                <button class="btn">
-                                    Closed Issues
-                                    <span class="badge bg-red text-red-fg ms-2">5</span>
-                                </button>
+                    <div class="datagrid">
+                        <div class="datagrid-item">
+                            <div class="datagrid-content">
+                                <a class="btn" asp-action="New" asp-controller="Issue" asp-area="IT" asp-route-id="@item.Id">Create New Issue</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+
+
     </div>
 </div>

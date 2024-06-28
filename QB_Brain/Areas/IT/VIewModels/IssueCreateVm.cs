@@ -9,4 +9,5 @@ public class IssueCreateVm
     
     public List<long> LabelIds { get; set; }
     public SelectList LabelList { get; set; }
+    public long RepositoryId { get; set; }
 }
