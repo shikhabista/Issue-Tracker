@@ -1,12 +1,10 @@
 ﻿using System.Transactions;
 using Base.Dtos;
 using Base.Dtos.IT;
+using Base.Dtos.IT.Issue;
 using Base.Entities;
-using Base.Enums;
 using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
-using Dapper;
-using Npgsql;
 
 namespace Base.Services;
 
@@ -14,15 +12,16 @@ public class IssueService : IIssueService
 {
     private readonly IDbService _dbService;
     private IUserRepo _userRepo;
+    private readonly IIssueLabelService _issueLabelService;
 
-
-    public IssueService(IDbService dbService, IUserRepo userRepo)
+    public IssueService(IDbService dbService, IUserRepo userRepo, IIssueLabelService issueLabelService)
     {
         _dbService = dbService;
         _userRepo = userRepo;
+        _issueLabelService = issueLabelService;
     }
 
-    public async Task CreateIssue(Issue issue)
+    public async Task CreateIssue(IssueCreateDto issue)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(

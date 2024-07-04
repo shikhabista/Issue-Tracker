@@ -1,11 +1,12 @@
 ﻿using Base.Dtos.IT;
+using Base.Dtos.IT.Issue;
 using Base.Entities;
 
 namespace Base.Services.Interfaces;
 
 public interface IIssueService
 {
-    Task CreateIssue(Issue issue);
+    Task CreateIssue(IssueCreateDto issue);
     Task<IssueDto> GetIssue(long id);
     Task<List<IssueDto>> GetIssueList();
     Task<Issue> UpdateIssue(Issue issue);

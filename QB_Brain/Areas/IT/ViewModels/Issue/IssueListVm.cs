@@ -1,6 +1,6 @@
 ﻿using Base.Dtos.IT;
 
-namespace IT_Web.Areas.IT.VIewModels;
+namespace IT_Web.Areas.IT.VIewModels.Issue;
 
 public class IssueListVm
 {

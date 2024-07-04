@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using Base.Dtos.IT;
 using Base.Entities;
 using Base.Services.Interfaces;
 
@@ -22,12 +23,20 @@ public class IssueLabelService : IIssueLabelService
         tx.Complete();
     }
 
-    public async Task<List<IssueLabel>> GetIssueLabelOf(long issueId)
+    public async Task<List<IssueLabelDto>> GetIssueLabelOf(long issueId)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var issue = await _dbService.GetAll<IssueLabel>("SELECT * FROM it.issue_label where id=@issue_id", new { issueId });
+        var labels = await _dbService.GetAll<IssueLabelDto>("SELECT * FROM it.issue_label where id=@issueId", new { issueId });
         tx.Complete();
-        return issue;
+        return labels;
+    }
+
+    public async Task<List<long>> GetLabelIdsOf(long issueId)
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        var labels = await _dbService.GetAll<IssueLabelDto>("SELECT * FROM it.issue_label where id=@issueId", new { issueId });
+        tx.Complete();
+        return labels.Select(a => a.label_id).ToList();
     }
 
     public async Task<IssueLabel> GetIssueLabel(long issueId, long labelId)
