@@ -5,7 +5,7 @@ namespace Base.Entities;
 [Table("label", Schema = "it")]
 public class Label 
 {
-    public long Id { get; set; }
+    public long LabelId { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
     public string Code { get; set; }

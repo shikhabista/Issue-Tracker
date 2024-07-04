@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Transactions;
+﻿using System.Transactions;
 using Base.Dtos.IT;
 using Base.Entities;
 using Base.Enums;
@@ -14,22 +13,20 @@ public class IssueService : IIssueService
 {
     private readonly IDbService _dbService;
     private IUserRepo _userRepo;
-    private readonly IDbConnection _db;
 
 
-    public IssueService(IDbService dbService, IUserRepo userRepo, IDbConnection db)
+    public IssueService(IDbService dbService, IUserRepo userRepo)
     {
         _dbService = dbService;
         _userRepo = userRepo;
-        _db = db;
     }
 
     public async Task CreateIssue(Issue issue)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.EditData(
-            "INSERT INTO it.issue (title, description, issueStatus, date,repository_id, assignee_id, last_updated) " +
-            "VALUES (@Name, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId, @LastUpdated)",
+            "INSERT INTO it.issue (title, description, issue_status, date,repository_id, assignee_id, last_updated) " +
+            "VALUES (@Title, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId, @LastUpdated)",
             issue);
         tx.Complete();
     }

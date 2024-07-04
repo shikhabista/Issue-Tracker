@@ -6,7 +6,7 @@ namespace Base.Entities;
 [Table("issue", Schema = "it")]
 public class Issue
 {
-    public long Id { get; set; }
+    public long IssueId { get; set; }
     public string Title { get; set; }
     public string? Description { get; set; }
     public virtual User? Assignee { get; set; }

@@ -2,44 +2,41 @@
 @{
     Layout = "_Layout";
 }
-
-<div class="card">
-    <div class="card-header">
-        <span class="card-title">Create new Issue</span>
-    </div>
-
-    <div class="card-body">
-
-        <div class="col-6 mb-2">
-            <label class="form-label required" for="">Add a title</label>
-            <input class="form-control" type="text" asp-for="Title">
+<form method="post">
+    <div class="card">
+        <div class="card-header">
+            <span class="card-title">Create new Issue</span>
         </div>
 
-        <div class="col-6 mb-2">
-            <label class="form-label" for="">Add a description</label>
-            <textarea rows="8" class="form-control" asp-for="Description"></textarea>
-        </div>
-        <div class="col-6">
-            <label class="form-label">Labels</label>
-            <select asp-for="LabelIds" class="form-select" asp-items="@Model.LabelList" id="select-tags" multiple>
-                <option value="">Select Labels</option>
-            </select>
-            @* <select type="text" class="form-select" placeholder="Select labels" value="" id="select-tags" multiple> *@
-            @*     <option value="HTML">HTML</option> *@
-            @*     <option value="JavaScript">JavaScript</option> *@
-            @*     <option value="CSS">CSS</option> *@
-            @*     <option value="jQuery">jQuery</option> *@
-            @*     <option value="Bootstrap">Bootstrap</option> *@
-            @*     <option value="Ruby">Ruby</option> *@
-            @*     <option value="Python">Python</option> *@
-            @* </select> *@
-        </div>
+        <div class="card-body">
+            
+            <div class="col-6 mb-2" hidden>
+                <label class="form-label required" for=""></label>
+                <input class="form-control" type="text" asp-for="RepositoryId">
+            </div>
+            <div class="col-6 mb-2">
+                <label class="form-label required" for="">Add a title</label>
+                <input class="form-control" type="text" asp-for="Title">
+            </div>
 
+            <div class="col-6 mb-2">
+                <label class="form-label" for="">Add a description</label>
+                <textarea rows="8" class="form-control" asp-for="Description"></textarea>
+            </div>
+            <div class="col-6">
+                <label class="form-label">Labels</label>
+                <select asp-for="LabelIds" class="form-select" asp-items="@Model.LabelList" id="select-tags" multiple>
+                    <option value="">Select Labels</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary" asp-action="New"> Submit</button>
+        </div>
     </div>
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary"> Submit</button>
-    </div>
-</div>
+</form>
+
 <script src="~/dist/libs/tinymce/js/tinymce.min.js?1684106062" defer></script>
 <script>
     

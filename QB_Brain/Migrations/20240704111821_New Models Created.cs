@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IT_Web.Migrations
 {
     /// <inheritdoc />
-    public partial class NewModelsAdded : Migration
+    public partial class NewModelsCreated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace IT_Web.Migrations
                 schema: "it",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
+                    label_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: true),
@@ -30,7 +30,7 @@ namespace IT_Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_label", x => x.id);
+                    table.PrimaryKey("pk_label", x => x.label_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,7 +38,7 @@ namespace IT_Web.Migrations
                 schema: "it",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
+                    repository_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: true),
@@ -50,7 +50,7 @@ namespace IT_Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_repository", x => x.id);
+                    table.PrimaryKey("pk_repository", x => x.repository_id);
                     table.ForeignKey(
                         name: "fk_repository_user_rec_by_id",
                         column: x => x.rec_by_id,
@@ -64,7 +64,7 @@ namespace IT_Web.Migrations
                 schema: "it",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
+                    issue_id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     title = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: true),
@@ -76,13 +76,13 @@ namespace IT_Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_issue", x => x.id);
+                    table.PrimaryKey("pk_issue", x => x.issue_id);
                     table.ForeignKey(
                         name: "fk_issue_repository_repository_id",
                         column: x => x.repository_id,
                         principalSchema: "it",
                         principalTable: "repository",
-                        principalColumn: "id",
+                        principalColumn: "repository_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "fk_issue_user_assignee_id",
@@ -111,14 +111,14 @@ namespace IT_Web.Migrations
                         column: x => x.issue_id,
                         principalSchema: "it",
                         principalTable: "issue",
-                        principalColumn: "id",
+                        principalColumn: "issue_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "fk_issue_label_label_label_id",
                         column: x => x.label_id,
                         principalSchema: "it",
                         principalTable: "label",
-                        principalColumn: "id",
+                        principalColumn: "label_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

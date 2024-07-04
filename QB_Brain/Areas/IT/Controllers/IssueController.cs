@@ -29,7 +29,7 @@ public class IssueController : Controller
         try
         {
             var report = await _issueService.GetIssueList();
-            return this.SendSuccess("", report);
+            return View(report);
         }
         catch (Exception e)
         {
@@ -39,13 +39,14 @@ public class IssueController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> New()
+    public async Task<IActionResult> New(long id)
     {
         if (!ModelState.IsValid) return View();
         var labels = await _labelService.GetLabelList();
         var vm = new IssueCreateVm
         {
-            LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name))
+            LabelList = new SelectList(labels, nameof(Label.LabelId), nameof(Label.Name)),
+            RepositoryId = id
         };
         return View(vm);
     }

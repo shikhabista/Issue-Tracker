@@ -33,24 +33,24 @@ public class RepositoryController : Controller
             var totalOpenIssue = 0;
             var totalClosedIssue = 0;
             RepositoryDto repositoryDto;
-            foreach (var repo in list)
-            {
-                var repoIssues = await _issueService.GetIssuesOf(repo.Id);
-                repositoryDto = new RepositoryDto
-                {
-                    Id = repo.Id,
-                    Name = repo.Name,
-                    Description = repo.Description,
-                    Visibility = repo.Visibility,
-                    Branch = repo.Branch,
-                    TotalIssuesCount = repoIssues.Count,
-                    TotalOpenIssuesCount = repoIssues.Count(a => a.issue_status == (long)IssueStatusEnum.Open),
-                    TotalClosedIssuesCount = repoIssues.Count(a => a.issue_status == (long)IssueStatusEnum.Close)
-                };
-            }
-            
-            
-            
+            // foreach (var repo in list)
+            // {
+            //     var repoIssues = await _issueService.GetIssuesOf(repo.Id);
+            //     repositoryDto = new RepositoryDto
+            //     {
+            //         Id = repo.Id,
+            //         Name = repo.Name,
+            //         Description = repo.Description,
+            //         Visibility = repo.Visibility,
+            //         Branch = repo.Branch,
+            //         TotalIssuesCount = repoIssues.Count,
+            //         TotalOpenIssuesCount = repoIssues.Count(a => a.issue_status == (long)IssueStatusEnum.Open),
+            //         TotalClosedIssuesCount = repoIssues.Count(a => a.issue_status == (long)IssueStatusEnum.Close)
+            //     };
+            // }
+            //
+            //
+            //
             var vm = new RepositoryReportVm
             {
                 RepositoryList = list,
@@ -91,7 +91,7 @@ public class RepositoryController : Controller
                 Branch = "Master"
             };
             await _repositoryService.CreateRepository(repo);
-            return this.SendSuccess("");
+            return RedirectToAction(nameof(Index));
         }
         catch (Exception e)
         {
