@@ -53,7 +53,7 @@ public class LabelService : ILabelService
     public async Task<bool> DeleteLabel(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData("DELETE FROM it.label WHERE id=@Id", new {id});
+        await _dbService.EditData("DELETE FROM it.label WHERE id=@id", new { id });
         tx.Complete();
         return true;
     }

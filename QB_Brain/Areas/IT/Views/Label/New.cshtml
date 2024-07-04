@@ -1,4 +1,4 @@
-﻿@model IT_Web.Areas.IT.VIewModels.LabelCreateVm
+﻿@model IT_Web.Areas.IT.VIewModels.Label.LabelCreateVm
 
 @{
     Layout = "_Layout";
@@ -44,8 +44,6 @@
                 @foreach (var item in Model.Labels)
                 {
                     <tr>
-
-                        
                         <td>
                             <span class="badge bg-azure-lt"> @item.Name</span>
                         </td>
@@ -53,10 +51,9 @@
                         <td>@item.Code</td>
                         <td>
                             <span class=" btn-list flex gap-3">
-                                <a href="#">Edit</a> <a href="#">Delete</a>
+                                <a href="#">Edit</a> <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                             </span>
                         </td>
-
                     </tr>
                 }
                 </tbody>
@@ -64,3 +61,48 @@
         </div>
     </div>
 </div>
+
+<div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Label</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <label class="form-label required" for="">Name</label>
+                        <input class="form-control" type="text" asp-for="Name" placeholder="Label name">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="">Description</label>
+                        <input class="form-control" type="text" asp-for="Description" placeholder="Description (optional)">
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label required" for="">Code</label>
+                        <input class="form-control" type="text" asp-for="Code" placeholder="Label code">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-bs-dismiss="modal">
+                    Update
+                </a>
+                <a href="#" class="btn btn-warning" data-bs-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('form1').style.display = 'none';
+    document.getElementById('form2').style.display = 'none';
+    document.getElementById('edit').addEventListener('click', () => {
+        document.getElementById('form1').style.display = 'inline';
+        document.getElementById('form2').style.display = 'inline';
+        document.getElementById('item1').style.display = 'none';
+        document.getElementById('item2').style.display = 'none';
+        });
+    
+</script>

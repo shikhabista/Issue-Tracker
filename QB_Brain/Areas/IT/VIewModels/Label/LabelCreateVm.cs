@@ -1,6 +1,4 @@
-﻿using Base.Entities;
-
-namespace IT_Web.Areas.IT.VIewModels;
+﻿namespace IT_Web.Areas.IT.VIewModels.Label;
 
 public class LabelCreateVm
 {
@@ -8,5 +6,5 @@ public class LabelCreateVm
     public string Code { get; set; }
     public string? Description { get; set; }
 
-    public List<Label> Labels { get; set; }
+    public List<Base.Entities.Label> Labels { get; set; }
 }
