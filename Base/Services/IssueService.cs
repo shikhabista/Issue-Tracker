@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using Base.Dtos;
 using Base.Dtos.IT;
 using Base.Entities;
 using Base.Enums;
@@ -66,7 +67,7 @@ public class IssueService : IIssueService
         return true;
     }
 
-    public async Task<List<IssueDto>> GetIssuesOf(long repositoryId)
+    public async Task<(List<IssueDto> list, string repoName)> GetIssuesOf(long repositoryId)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         var query = $"select * from it.issue where repository_id = @repositoryId;";
@@ -74,8 +75,10 @@ public class IssueService : IIssueService
         {
             repositoryId
         })).ToList();
-
-        return list;
+        var repository = await _dbService.GetAsync<RepositoryDto>("SELECT * FROM it.repository where id=@repositoryId", 
+            new { repositoryId });
+        var repoName = repository.Name;
+        return (list, repoName);
        
     }
 }

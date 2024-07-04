@@ -25,12 +25,17 @@ public class IssueController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(long repositoryId)
     {
         try
         {
-            var report = await _issueService.GetIssueList();
-            return View(report);
+            var (report, repoName) = await _issueService.GetIssuesOf(repositoryId);
+            var issueReport = new IssueListVm()
+            {
+                IssueList = report,
+                Repository = repoName
+            };
+            return View(issueReport);
         }
         catch (Exception e)
         {
@@ -40,14 +45,14 @@ public class IssueController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> New(long id)
+    public async Task<IActionResult> New(long repositoryId)
     {
         if (!ModelState.IsValid) return View();
         var labels = await _labelService.GetLabelList();
         var vm = new IssueCreateVm
         {
-            LabelList = new SelectList(labels, nameof(LabelDto.label_id), nameof(LabelDto.name)),
-            RepositoryId = id
+            LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name)),
+            RepositoryId = repositoryId
         };
         return View(vm);
     }

@@ -69,12 +69,12 @@ namespace IT_Web.Migrations
 
             modelBuilder.Entity("Base.Entities.Issue", b =>
                 {
-                    b.Property<long>("IssueId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("issue_id");
+                        .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("IssueId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("AssigneeId")
                         .HasColumnType("bigint")
@@ -105,7 +105,7 @@ namespace IT_Web.Migrations
                         .HasColumnType("text")
                         .HasColumnName("title");
 
-                    b.HasKey("IssueId")
+                    b.HasKey("Id")
                         .HasName("pk_issue");
 
                     b.HasIndex("AssigneeId")
@@ -152,12 +152,12 @@ namespace IT_Web.Migrations
 
             modelBuilder.Entity("Base.Entities.Label", b =>
                 {
-                    b.Property<long>("LabelId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("label_id");
+                        .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("LabelId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -181,7 +181,7 @@ namespace IT_Web.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status");
 
-                    b.HasKey("LabelId")
+                    b.HasKey("Id")
                         .HasName("pk_label");
 
                     b.ToTable("label", "it");
@@ -206,12 +206,12 @@ namespace IT_Web.Migrations
 
             modelBuilder.Entity("Base.Entities.Repository", b =>
                 {
-                    b.Property<long>("RepositoryId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("repository_id");
+                        .HasColumnName("id");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("RepositoryId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Branch")
                         .IsRequired()
@@ -244,7 +244,7 @@ namespace IT_Web.Migrations
                         .HasColumnType("text")
                         .HasColumnName("visibility");
 
-                    b.HasKey("RepositoryId")
+                    b.HasKey("Id")
                         .HasName("pk_repository");
 
                     b.HasIndex("RecById")

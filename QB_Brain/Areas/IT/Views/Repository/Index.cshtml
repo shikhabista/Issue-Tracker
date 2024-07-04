@@ -39,10 +39,10 @@
                             <div class="datagrid-title">Issues</div>
                             <div class="datagrid-content">
                                 <div class="btn-list">
-                                    <button class="btn">
+                                    <a class="btn" asp-action="Index" asp-controller="Issue" asp-route-repositoryId="@item.Id">
                                         Total Issues
                                         <span class="badge bg-blue text-blue-fg ms-2">@item.TotalIssuesCount</span>
-                                    </button>
+                                    </a>
                                     <button class="btn">
                                         Open Issues
                                         <span class="badge bg-lime text-lime-fg  ms-2">@item.TotalOpenIssuesCount</span>
@@ -59,7 +59,7 @@
                     <div class="datagrid">
                         <div class="datagrid-item">
                             <div class="datagrid-content">
-                                <a class="btn" asp-action="New" asp-controller="Issue" asp-area="IT" asp-route-id="@item.repository_id">Create New Issue</a>
+                                <a class="btn" asp-action="New" asp-controller="Issue" asp-area="IT" asp-route-repositoryId="@item.Id">Create New Issue</a>
                             </div>
                         </div>
                     </div>

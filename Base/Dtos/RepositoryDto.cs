@@ -2,7 +2,7 @@
 
 public class RepositoryDto
 {
-    public long repository_id { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
     public string Visibility { get; set; }

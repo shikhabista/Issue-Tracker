@@ -64,14 +64,16 @@ public class RepositoryService : IRepositoryService
         var repositoryList = await _dbService.GetAll<RepositoryDto>("SELECT * FROM it.repository", new { });
         foreach (var item in repositoryList)
         {
-            var query = $"select * from it.issue where repository_id = @repository_id;";
+            var query = $"select * from it.issue where repository_id = @repositoryId;";
             var issueList = (await _dbService.GetAll<IssueDto>(query, new
             {
-                item.repository_id
+                repositoryId = item.Id
             })).ToList();
+            
             var aa = issueList.Count(a => a.issue_status == 1);
             var bb = issueList.Count(a => a.issue_status == 2);
             var ab = issueList.Count;
+            
             item.TotalOpenIssuesCount = aa;
             item.TotalClosedIssuesCount = bb;
             item.TotalIssuesCount = ab;

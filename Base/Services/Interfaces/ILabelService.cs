@@ -7,7 +7,7 @@ public interface ILabelService
 {
     Task CreateLabel(Label label);
     Task<Label> GetLabel(long id);
-    Task<List<LabelDto>> GetLabelList();
+    Task<List<Label>> GetLabelList();
     Task<Label> UpdateLabel(Label label);
     Task<bool> DeleteLabel(long id);
 }
