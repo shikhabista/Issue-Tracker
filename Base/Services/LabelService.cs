@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using Base.Dtos.IT;
 using Base.Entities;
 using Base.Services.Interfaces;
 
@@ -31,10 +32,10 @@ public class LabelService : ILabelService
         return label;
     }
 
-    public async Task<List<Label>> GetLabelList()
+    public async Task<List<LabelDto>> GetLabelList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var labelList = await _dbService.GetAll<Label>("SELECT * FROM it.label", new { });
+        var labelList = await _dbService.GetAll<LabelDto>("SELECT * FROM it.label", new { });
         tx.Complete();
         return labelList;
     }

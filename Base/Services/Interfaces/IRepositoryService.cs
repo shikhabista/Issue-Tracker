@@ -10,4 +10,5 @@ public interface IRepositoryService
     Task<List<RepositoryDto>> GetRepositoryList();
     Task<Repository> UpdateRepository(Repository repository);
     Task<bool> DeleteRepository(long id);
+    Task<List<RepositoryDto>> GetData();
 }

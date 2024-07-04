@@ -28,37 +28,9 @@ public class RepositoryController : Controller
     {
         try
         {
-            var list = await _repositoryService.GetRepositoryList();
-            var totalIssueCount = 0;
-            var totalOpenIssue = 0;
-            var totalClosedIssue = 0;
-            RepositoryDto repositoryDto;
-            // foreach (var repo in list)
-            // {
-            //     var repoIssues = await _issueService.GetIssuesOf(repo.Id);
-            //     repositoryDto = new RepositoryDto
-            //     {
-            //         Id = repo.Id,
-            //         Name = repo.Name,
-            //         Description = repo.Description,
-            //         Visibility = repo.Visibility,
-            //         Branch = repo.Branch,
-            //         TotalIssuesCount = repoIssues.Count,
-            //         TotalOpenIssuesCount = repoIssues.Count(a => a.issue_status == (long)IssueStatusEnum.Open),
-            //         TotalClosedIssuesCount = repoIssues.Count(a => a.issue_status == (long)IssueStatusEnum.Close)
-            //     };
-            // }
-            //
-            //
-            //
-            var vm = new RepositoryReportVm
-            {
-                RepositoryList = list,
-                TotalOpenIssuesCount = 0,
-                TotalClosedIssuesCount = 0,
-                TotalIssuesCount = 0
-            };
-            return View(vm);
+            var list = await _repositoryService.GetData();
+           
+            return View(list);
         }
         catch (Exception e)
         {

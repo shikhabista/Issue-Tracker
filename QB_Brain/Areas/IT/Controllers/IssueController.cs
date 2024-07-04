@@ -1,4 +1,5 @@
-﻿using Base.Entities;
+﻿using Base.Dtos.IT;
+using Base.Entities;
 using Base.Enums;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels;
@@ -45,7 +46,7 @@ public class IssueController : Controller
         var labels = await _labelService.GetLabelList();
         var vm = new IssueCreateVm
         {
-            LabelList = new SelectList(labels, nameof(Label.LabelId), nameof(Label.Name)),
+            LabelList = new SelectList(labels, nameof(LabelDto.label_id), nameof(LabelDto.name)),
             RepositoryId = id
         };
         return View(vm);

@@ -1,5 +1,6 @@
 ﻿using System.Transactions;
 using Base.Dtos;
+using Base.Dtos.IT;
 using Base.Entities;
 using Base.Services.Interfaces;
 
@@ -55,5 +56,27 @@ public class RepositoryService : IRepositoryService
         await _dbService.EditData("DELETE FROM it.repository WHERE id=@Id", new {id});
         tx.Complete();
         return true;
+    }
+
+    public async Task<List<RepositoryDto>> GetData()
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        var repositoryList = await _dbService.GetAll<RepositoryDto>("SELECT * FROM it.repository", new { });
+        foreach (var item in repositoryList)
+        {
+            var query = $"select * from it.issue where repository_id = @repository_id;";
+            var issueList = (await _dbService.GetAll<IssueDto>(query, new
+            {
+                item.repository_id
+            })).ToList();
+            var aa = issueList.Count(a => a.issue_status == 1);
+            var bb = issueList.Count(a => a.issue_status == 2);
+            var ab = issueList.Count;
+            item.TotalOpenIssuesCount = aa;
+            item.TotalClosedIssuesCount = bb;
+            item.TotalIssuesCount = ab;
+        }
+        tx.Complete();
+        return repositoryList;
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IT_Web.Areas.IT.VIewModels.RepositoryReportVm
+﻿@model List<Base.Dtos.RepositoryDto>
 @{
     Layout = "_Layout";
 }
@@ -17,7 +17,7 @@
 
 <div class="page-body">
     <div class="container-xl">
-        @foreach (var item in Model.RepositoryList)
+        @foreach (var item in Model)
         {
             <div class="card">
                 <div class="card-header">
@@ -41,15 +41,15 @@
                                 <div class="btn-list">
                                     <button class="btn">
                                         Total Issues
-                                        <span class="badge bg-blue text-blue-fg ms-2">@Model.TotalIssuesCount</span>
+                                        <span class="badge bg-blue text-blue-fg ms-2">@item.TotalIssuesCount</span>
                                     </button>
                                     <button class="btn">
                                         Open Issues
-                                        <span class="badge bg-lime text-lime-fg  ms-2">@Model.TotalOpenIssuesCount</span>
+                                        <span class="badge bg-lime text-lime-fg  ms-2">@item.TotalOpenIssuesCount</span>
                                     </button>
                                     <button class="btn">
                                         Closed Issues
-                                        <span class="badge bg-red text-red-fg ms-2">@Model.TotalClosedIssuesCount</span>
+                                        <span class="badge bg-red text-red-fg ms-2">@item.TotalClosedIssuesCount</span>
                                     </button>
 
                                 </div>
