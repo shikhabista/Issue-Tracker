@@ -30,6 +30,7 @@ public static class DiConfig
             .AddTransient<IDbService, DbService>()
             .AddTransient<IIssueService, IssueService>()
             .AddTransient<IRepositoryService, RepositoryService>()
-            .AddTransient<ILabelService, LabelService>();
+            .AddTransient<ILabelService, LabelService>()
+            .AddTransient<IIssueLabelService, IssueLabelService>();
     }
 }

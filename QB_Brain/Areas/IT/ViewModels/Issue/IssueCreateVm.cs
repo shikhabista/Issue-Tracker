@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace IT_Web.Areas.IT.VIewModels;
+namespace IT_Web.Areas.IT.VIewModels.Issue;
 
 public class IssueCreateVm
 {

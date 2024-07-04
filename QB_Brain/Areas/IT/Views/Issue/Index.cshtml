@@ -1,25 +1,14 @@
-﻿@model IT_Web.Areas.IT.VIewModels.IssueListVm
+﻿@model IT_Web.Areas.IT.VIewModels.Issue.IssueListVm
 
 @{
     Layout = "_Layout";
 }
-<!-- Page header -->
+
 <div class="card">
     <div class="card-header">
         <h1 class="card-title">@Model.Repository</h1>
     </div>
     <div class="card-body">
-        @* <div class="page-header d-print-none mt-0"> *@
-        @* <div class="container-xl"> *@
-        @* <div class="row g-2 align-items-center"> *@
-        @*     <div class="col"> *@
-        @*         <h3 class="page-title"> *@
-        @*             Issues *@
-        @*         </h3> *@
-        @*     </div> *@
-        @* </div> *@
-        @* </div> *@
-        @* </div> *@
         <div class="container-xl">
             <div class="table-responsive">
                 <table class="table card-table table-vcenter text-nowrap datatable">
@@ -52,7 +41,7 @@
                             }
                             <td>
                                 <div class="btn-list flex gap-3">
-                                    <a href="#" class>
+                                    <a asp-action="Edit" asp-route-id="@item.id">
                                         Edit
                                     </a>
                                     <a href="#">

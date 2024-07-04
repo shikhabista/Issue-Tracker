@@ -1,0 +1,16 @@
+﻿using Base.Dtos.IT;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace IT_Web.Areas.IT.VIewModels.Issue;
+
+public class IssueEditVm
+{
+    public object Id { get; set; }
+    public string Status { get; set; }
+    public string Title { get; set; }
+    public string? Description { get; set; }
+    public DateTime Date { get; set; }
+    public long RepositoryId { get; set; }
+    public SelectList LabelList { get; set; }
+    public List<long> LabelIds { get; set; }
+}

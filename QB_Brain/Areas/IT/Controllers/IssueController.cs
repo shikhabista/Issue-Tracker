@@ -1,8 +1,10 @@
 ﻿using Base.Dtos.IT;
+using Base.Dtos.IT.Issue;
 using Base.Entities;
 using Base.Enums;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels;
+using IT_Web.Areas.IT.VIewModels.Issue;
 using IT_Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,12 +18,14 @@ public class IssueController : Controller
     private readonly ILogger<IssueController> _logger;
     private readonly IIssueService _issueService;
     private readonly ILabelService _labelService;
+    private IIssueLabelService _issueLabelService;
 
-    public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService)
+    public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService, IIssueLabelService issueLabelService)
     {
         _logger = logger;
         _issueService = issueService;
         _labelService = labelService;
+        _issueLabelService = issueLabelService;
     }
 
     [HttpGet]
@@ -62,17 +66,61 @@ public class IssueController : Controller
     {
         try
         {
-            var issue = new Issue
+            var dto = new IssueCreateDto
             {
                 Title = vm.Title,
                 Description = vm.Description,
                 IssueStatus = IssueStatusEnum.Open,
                 Date = DateTime.Now,
                 RepositoryId = vm.RepositoryId,
-                LastUpdated = DateTime.Now
+                LastUpdated = DateTime.Now,
+                LabelIds = vm.LabelIds
             };
-            await _issueService.CreateIssue(issue);
+            await _issueService.CreateIssue(dto);
             return RedirectToAction(nameof(Index));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error");
+            return this.SendError(e.Message);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(long id)
+    {
+        try
+        {
+            var issue = await _issueService.GetIssue(id);
+            var labels = await _labelService.GetLabelList();
+            var labelIds = await _issueLabelService.GetLabelIdsOf(id);
+            var vm = new IssueEditVm
+            {
+                Id = issue.id,
+                Title = issue.title,
+                Description = issue.description,
+                Status = issue.issue_status.ToString(),
+                RepositoryId = issue.repository_id,
+                Date = issue.date,
+                LabelIds = labelIds,
+                LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name)),
+            };
+            return View(vm);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error");
+            return this.SendError(e.Message);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(long id)
+    {
+        try
+        {
+            await _labelService.DeleteLabel(id);
+            return RedirectToAction(nameof(New));
         }
         catch (Exception e)
         {
