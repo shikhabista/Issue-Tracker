@@ -76,10 +76,10 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         var query = $"select * from it.issue where repository_id = @repositoryId;";
-        var list = (await _dbService.GetAll<IssueDto>(query, new
+        var list = await _dbService.GetAll<IssueDto>(query, new
         {
             repositoryId
-        })).ToList();
+        });
         var repository = await _dbService.GetAsync<RepositoryDto>("SELECT * FROM it.repository where id=@repositoryId",
             new { repositoryId });
         var repoName = repository.Name;

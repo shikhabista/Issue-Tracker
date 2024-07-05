@@ -18,7 +18,7 @@ public class IssueController : Controller
     private readonly IIssueService _issueService;
     private readonly ILabelService _labelService;
     private readonly IIssueLabelService _issueLabelService;
-    private IUserRepo _userRepo;
+    private readonly IUserRepo _userRepo;
 
     public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService, IIssueLabelService issueLabelService, IUserRepo userRepo)
     {
@@ -97,7 +97,7 @@ public class IssueController : Controller
                 }
             }
 
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
         catch (Exception e)
         {
@@ -154,7 +154,7 @@ public class IssueController : Controller
                 assignee_id = vm.UserId
             };
             var issue = await _issueService.UpdateIssue(issueEditDto);
-            
+
             await _issueLabelService.RemoveIssueLabel(vm.Id);
             if (vm.LabelIds != null)
             {
@@ -170,7 +170,7 @@ public class IssueController : Controller
                 }
             }
 
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
         catch (Exception e)
         {
@@ -185,7 +185,7 @@ public class IssueController : Controller
         try
         {
             await _issueService.OpenIssue(id);
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
         }
         catch (Exception e)
         {
@@ -200,7 +200,7 @@ public class IssueController : Controller
         try
         {
             await _issueService.CloseIssue(id);
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
         }
         catch (Exception e)
         {
