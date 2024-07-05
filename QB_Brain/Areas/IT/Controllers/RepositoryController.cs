@@ -50,9 +50,11 @@ public class RepositoryController : Controller
         try
         {
             var visibility = model.IsPrivate != null ? Repository.Private : Repository.Public;
+            var isDuplicate = await _repositoryService.CheckIfDuplicateName(model.Name.Trim());
+            if (isDuplicate) throw new Exception("Duplicate repository name");
             var repo = new Repository
             {
-                Name = model.Name,
+                Name = model.Name.Trim(),
                 Description = model.Description,
                 Visibility = visibility,
                 RecDate = DateTime.Now,
@@ -102,7 +104,7 @@ public class RepositoryController : Controller
             var repo = new Repository
             {
                 Id = vm.Id,
-                Name = vm.Name,
+                Name = vm.Name.Trim(),
                 Description = vm.Description,
                 Visibility = vm.IsPrivate != null ? Repository.Private : Repository.Public,
                 Status = StatusEnum.Active,

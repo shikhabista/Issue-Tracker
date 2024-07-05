@@ -42,7 +42,7 @@ public class DbService : IDbService
         return result;
     }
 
-    public async Task<T> CreateAndReturn<T>(string command, object @params)
+    public async Task<T> QuerySingleOrDefaultAsync<T>(string command, object @params)
     {
         T result;
         result = await _db.QuerySingleOrDefaultAsync<T>(command, @params);

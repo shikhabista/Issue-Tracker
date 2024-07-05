@@ -25,7 +25,7 @@ public class IssueService : IIssueService
         var query = "INSERT INTO it.issue (title, description, issue_status, date,repository_id, assignee_id, last_updated) " +
                     "VALUES (@Title, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId, @LastUpdated)"
                     + "Returning *";
-        var createdIssue = await _dbService.CreateAndReturn<IssueDto>(query, issue);
+        var createdIssue = await _dbService.QuerySingleOrDefaultAsync<IssueDto>(query, issue);
         tx.Complete();
         return createdIssue;
     }
