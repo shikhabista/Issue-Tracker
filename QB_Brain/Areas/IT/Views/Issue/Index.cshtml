@@ -45,7 +45,7 @@
                             }
                             <td>
                                 <div class="btn-list flex gap-3">
-                                    <a asp-action="Edit" asp-route-id="@item.id">
+                                    <a asp-action="Edit" asp-route-id="@item.id" hidden="@(item.issue_status == 2)">
                                         Edit
                                     </a>
                                     @if (item.issue_status == 1)
