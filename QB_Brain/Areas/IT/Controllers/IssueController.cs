@@ -1,5 +1,4 @@
-﻿using Base.Dtos.IT;
-using Base.Dtos.IT.Issue;
+﻿using Base.Dtos.IT.Issue;
 using Base.Entities;
 using Base.Enums;
 using Base.Services.Interfaces;
@@ -88,7 +87,7 @@ public class IssueController : Controller
                 await _issueLabelService.AddIssueLabel(dto);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
         }
         catch (Exception e)
         {
@@ -141,7 +140,7 @@ public class IssueController : Controller
                 last_updated = DateTime.Now,
             };
             var issue = await _issueService.UpdateIssue(issueEditDto);
-            
+
             await _issueLabelService.RemoveIssueLabel(vm.Id);
             foreach (var labelId in vm.LabelIds)
             {
@@ -154,7 +153,7 @@ public class IssueController : Controller
                 await _issueLabelService.AddIssueLabel(dto);
             }
 
-            return Redirect("/IT/Repository/Index");
+            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
         }
         catch (Exception e)
         {
@@ -169,7 +168,7 @@ public class IssueController : Controller
         try
         {
             await _issueService.OpenIssue(id);
-            return RedirectToAction(nameof(New));
+            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
         }
         catch (Exception e)
         {
@@ -179,12 +178,12 @@ public class IssueController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> CloseIssue(long id)
+    public async Task<IActionResult> CloseIssue(long id, long repositoryId)
     {
         try
         {
             await _issueService.CloseIssue(id);
-            return RedirectToAction(nameof(New));
+            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
         }
         catch (Exception e)
         {

@@ -29,7 +29,7 @@
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
                                     </svg>
                                 </i>
-                                <a href="#" class="text-black"> @item.title </a>
+                                <a class="text-black"> @item.title </a>
                                 @foreach (var label in item.label_names)
                                 {
                                     <span class="badge bg-azure-lt"> @label</span>
@@ -41,16 +41,26 @@
                             }
                             else
                             {
-                                <td> Close </td>
+                                <td class="text-orange"> Closed </td>
                             }
                             <td>
                                 <div class="btn-list flex gap-3">
                                     <a asp-action="Edit" asp-route-id="@item.id">
                                         Edit
                                     </a>
-                                    <a href="#">
-                                        Close Issue
-                                    </a>
+                                    @if (item.issue_status == 1)
+                                    {
+                                        <a asp-action="CloseIssue" asp-route-id="@item.id" asp-route-repositoryId="@item.repository_id">
+                                            Close Issue
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="OpenIssue" asp-route-id="@item.id">
+                                            Re-Open Issue
+                                        </a>
+                                    }
+
                                 </div>
                             </td>
                         </tr>
