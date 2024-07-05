@@ -64,7 +64,7 @@ namespace IT_Web.Migrations
                     b.HasKey("Id")
                         .HasName("pk_branch");
 
-                    b.ToTable("branch", "Base");
+                    b.ToTable("branch", "base");
                 });
 
             modelBuilder.Entity("Base.Entities.Issue", b =>
@@ -201,7 +201,7 @@ namespace IT_Web.Migrations
                     b.HasKey("ItemKey")
                         .HasName("pk_organization_info");
 
-                    b.ToTable("organization_info", "Base");
+                    b.ToTable("organization_info", "base");
                 });
 
             modelBuilder.Entity("Base.Entities.Repository", b =>
@@ -316,7 +316,7 @@ namespace IT_Web.Migrations
                     b.HasIndex("BranchId")
                         .HasDatabaseName("ix_user_branch_id");
 
-                    b.ToTable("user", "Base");
+                    b.ToTable("user", "base");
                 });
 
             modelBuilder.Entity("Base.Entities.Issue", b =>

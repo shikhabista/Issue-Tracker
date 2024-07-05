@@ -1,4 +1,5 @@
 ﻿using Base.Entities;
+using Base.Providers.Interfaces;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.ViewModels.Repository;
 using IT_Web.Areas.IT.VIewModels.Repository;
@@ -14,12 +15,14 @@ public class RepositoryController : Controller
     private readonly ILogger<RepositoryController> _logger;
     private readonly IRepositoryService _repositoryService;
     private readonly IIssueService _issueService;
+    private readonly ICurrentUserProvider _currentUserProvider;
 
-    public RepositoryController(ILogger<RepositoryController> logger, IRepositoryService repositoryService, IIssueService issueService)
+    public RepositoryController(ILogger<RepositoryController> logger, IRepositoryService repositoryService, IIssueService issueService, ICurrentUserProvider currentUserProvider)
     {
         _logger = logger;
         _repositoryService = repositoryService;
         _issueService = issueService;
+        _currentUserProvider = currentUserProvider;
     }
 
     [HttpGet]
@@ -49,8 +52,9 @@ public class RepositoryController : Controller
     {
         try
         {
+            var userId = _currentUserProvider.GetUserId();
             var visibility = model.IsPrivate != null ? Repository.Private : Repository.Public;
-            var isDuplicate = await _repositoryService.CheckIfDuplicateName(model.Name.Trim());
+            var isDuplicate = await _repositoryService.CheckIfDuplicateName(model.Name.ToLower().Trim());
             if (isDuplicate) throw new Exception("Duplicate repository name");
             var repo = new Repository
             {
@@ -59,7 +63,8 @@ public class RepositoryController : Controller
                 Visibility = visibility,
                 RecDate = DateTime.Now,
                 Status = StatusEnum.Active,
-                Branch = "Master"
+                Branch = "Master",
+                RecById = userId
             };
             await _repositoryService.CreateRepository(repo);
             return RedirectToAction(nameof(Index));
@@ -104,7 +109,7 @@ public class RepositoryController : Controller
             var repo = new Repository
             {
                 Id = vm.Id,
-                Name = vm.Name.Trim(),
+                Name = vm.Name.ToLower().Trim(),
                 Description = vm.Description,
                 Visibility = vm.IsPrivate != null ? Repository.Private : Repository.Public,
                 Status = StatusEnum.Active,

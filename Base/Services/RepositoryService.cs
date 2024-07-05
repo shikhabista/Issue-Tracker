@@ -86,6 +86,10 @@ public class RepositoryService : IRepositoryService
             item.TotalOpenIssuesCount = aa;
             item.TotalClosedIssuesCount = bb;
             item.TotalIssuesCount = ab;
+            
+            var userQuery = "select name from base.user where id = @userId;";
+            var userName = await _dbService.GetAsync<string>(userQuery, new { userId = item.rec_by_id });
+            item.RecBy = userName;
         }
 
         tx.Complete();
