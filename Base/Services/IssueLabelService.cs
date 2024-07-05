@@ -64,7 +64,7 @@ public class IssueLabelService : IIssueLabelService
     public async Task<bool> RemoveIssueLabel(long issueId)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.ExecuteQuery("DELETE FROM it.issue WHERE issue_id=@issueId", new { id = issueId });
+        await _dbService.ExecuteQuery("DELETE FROM it.issue_label WHERE issue_id=@issueId", new { issueId });
         tx.Complete();
         return true;
     }

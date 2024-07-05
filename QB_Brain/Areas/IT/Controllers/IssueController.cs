@@ -146,7 +146,7 @@ public class IssueController : Controller
             {
                 var dto = new IssueLabel
                 {
-                    IssueId = issue.id,
+                    IssueId = issueEditDto.id,
                     LabelId = labelId,
                     RecDate = DateTime.Now
                 };

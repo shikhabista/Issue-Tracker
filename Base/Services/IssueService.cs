@@ -49,8 +49,8 @@ public class IssueService : IIssueService
     public async Task<IssueDto> UpdateIssue(IssueDto dto)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.ExecuteQuery("Update it.issue SET title=@title, description=@description, issue_status=@isssue_status, " +
-                                      "date=@date, assigned_id=@assigned_id, repository_id=@repository_id, last_updated=@last_updated WHERE id=@id",
+        await _dbService.ExecuteQuery("Update it.issue SET title=@title, description=@description, issue_status=@issue_status, " +
+                                      "date=@date, repository_id=@repository_id, last_updated=@last_updated WHERE id=@id",
             dto);
         tx.Complete();
         return dto;
