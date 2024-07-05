@@ -87,7 +87,7 @@ public class IssueController : Controller
                 await _issueLabelService.AddIssueLabel(dto);
             }
 
-            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});
         }
         catch (Exception e)
         {
@@ -153,7 +153,7 @@ public class IssueController : Controller
                 await _issueLabelService.AddIssueLabel(dto);
             }
 
-            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});
         }
         catch (Exception e)
         {
@@ -163,12 +163,12 @@ public class IssueController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> OpenIssue(long id)
+    public async Task<IActionResult> OpenIssue(long id, long repositoryId)
     {
         try
         {
             await _issueService.OpenIssue(id);
-            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId});
         }
         catch (Exception e)
         {
@@ -183,7 +183,7 @@ public class IssueController : Controller
         try
         {
             await _issueService.CloseIssue(id);
-            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId});
         }
         catch (Exception e)
         {

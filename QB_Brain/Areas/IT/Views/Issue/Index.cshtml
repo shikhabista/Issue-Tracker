@@ -56,7 +56,7 @@
                                     }
                                     else
                                     {
-                                        <a asp-action="OpenIssue" asp-route-id="@item.id">
+                                        <a asp-action="OpenIssue" asp-route-id="@item.id" asp-route-repositoryId="@item.repository_id">
                                             Re-Open Issue
                                         </a>
                                     }
