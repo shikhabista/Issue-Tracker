@@ -88,7 +88,7 @@ public class LabelController : Controller
         try
         {
             var issueLabel = await _issueLabelService.CheckIfLabelInUse(id);
-            if (issueLabel) throw new Exception("Can't to delete label. Label is assigned to an issue");
+            if (issueLabel) throw new Exception("Can't delete label. Label is assigned to an issue");
             await _labelService.DeleteLabel(id);
             return RedirectToAction(nameof(New));
         }

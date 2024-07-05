@@ -51,10 +51,10 @@ public class IssueLabelService : IIssueLabelService
     public async Task<bool> CheckIfLabelInUse(long labelId)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var issue = await _dbService.ExecuteQuery("SELECT count(*) FROM it.issue_label where label_id = @labelId",
+        var issue = await _dbService.GetAll<long>("SELECT id FROM it.issue_label where label_id=@labelId",
             new { labelId });
         tx.Complete();
-        return issue > 0;
+        return issue.Count > 0;
     }
 
     public async Task<List<IssueLabel>> GetIssueLabelList()
