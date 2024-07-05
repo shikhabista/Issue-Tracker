@@ -1,0 +1,38 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IT_Web.Areas.Admin.Requests.UserUpdateReq;
+<div class="card col-12">
+    <h5 class="card-header">Edit User</h5>
+    <form method="post" asp-area="Admin" asp-controller="User" asp-action="Update">
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>
+        <div class="card-body">
+            <div class="d-flex flex-wrap gap-3">
+                <div class="col col-mx-w-20">
+                    <label class="required" for="Name">Name</label>
+                    <input class="form-control" value="@Model.Name" asp-for="Name" type="text" required/>
+                </div>
+
+                <div class="col col-mx-w-20">
+                    <label class="required" for="Address">Address</label>
+                    <input class="form-control" value="@Model.Address" asp-for="Address" type="text" required/>
+
+                </div>
+
+                <div class="col col-mx-w-20">
+                    <label class="required" for="ContactNo">Contact</label>
+                    <input class="form-control" value="@Model.ContactNo" asp-for="ContactNo" type="number" required/>
+
+                </div>
+                <div class="col col-mx-w-20">
+                    <label for="Email">Email</label>
+                    <input value="@Model.Email" class="form-control" asp-for="Email" type="email"/>
+                </div>
+
+
+            </div>
+
+            <div>
+                <button style="margin-top: 2%" type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

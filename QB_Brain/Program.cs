@@ -127,21 +127,25 @@ void ConfigureStaticFiles(WebApplication webApplication, ServiceProvider service
     });
 
     var contentPathProvider = serviceProvider1.GetRequiredService<IContentPathProvider>();
+    var attachmentDir = contentPathProvider.GetPath(DirectoryType.Attachments).Result;
+    var backupDir = contentPathProvider.GetPath(DirectoryType.Backup).Result;
+    var dbRestoreDir = contentPathProvider.GetPath(DirectoryType.DbRestore).Result;
     webApplication.UseStaticFiles(new StaticFileOptions
     {
-        FileProvider = new PhysicalFileProvider(contentPathProvider.GetPath(DirectoryType.Attachments).Result),
+        FileProvider = new PhysicalFileProvider(attachmentDir),
         RequestPath = DirRouteConstant.Attachments
     });
 
+    
     webApplication.UseStaticFiles(new StaticFileOptions
     {
-        FileProvider = new PhysicalFileProvider(contentPathProvider.GetPath(DirectoryType.Backup).Result),
+        FileProvider = new PhysicalFileProvider(backupDir),
         RequestPath = DirRouteConstant.Backups
     });
 
     webApplication.UseStaticFiles(new StaticFileOptions
     {
-        FileProvider = new PhysicalFileProvider(contentPathProvider.GetPath(DirectoryType.DbRestore).Result),
+        FileProvider = new PhysicalFileProvider(dbRestoreDir),
         RequestPath = DirRouteConstant.DbRestore
     });
 }

@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Base.Entities.Interfaces;
 
 namespace Base.Entities;
 
 [Table("branch", Schema = "Base")]
-public class Branch : BranchMiniInfo
+public class Branch : BranchMiniInfo, IBaseEntity
 {
     public BranchMiniInfo ToMiniInfo => new BranchMiniInfo
     {

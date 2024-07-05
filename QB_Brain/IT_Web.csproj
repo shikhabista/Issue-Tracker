@@ -31,7 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Areas\Admin\ViewModels\" />
       <Folder Include="Content\Attachments\" />
       <Folder Include="Controllers\" />
       <Folder Include="Middlewares\" />
@@ -43,6 +42,7 @@
       <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\Edit.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\Index.cshtml" />
       <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\New.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\Admin\Views\User\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>

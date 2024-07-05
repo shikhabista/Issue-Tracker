@@ -1,5 +1,5 @@
 ﻿using Base.Services.Interfaces;
-using IT_Web.Areas.v1.Admin.Requests;
+using IT_Web.Areas.Admin.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using IT_Web.Extensions;
@@ -36,5 +36,11 @@ public class LoginController : Controller
         {
             return this.SendError(e.Message);
         }
+    }
+    
+    public async Task<IActionResult> LogOut()
+    {
+        await _authService.LogOut();
+        return RedirectToAction(nameof(Index));
     }
 }
