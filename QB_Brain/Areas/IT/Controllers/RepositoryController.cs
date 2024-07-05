@@ -36,8 +36,6 @@ public class RepositoryController : Controller
             _logger.LogError(e, "Error");
             return this.SendError(e.Message);
         }
-
-        return View();
     }
 
     [HttpGet]
