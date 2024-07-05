@@ -12,4 +12,6 @@ public interface IIssueLabelService
     Task<IssueLabel> UpdateIssueLabel(IssueLabel issueLabel);
     Task<bool> RemoveIssueLabel(long issueId);
     Task<List<long>> GetLabelIdsOf(long issueId);
+
+    Task<bool> CheckIfLabelInUse(long labelId);
 }
