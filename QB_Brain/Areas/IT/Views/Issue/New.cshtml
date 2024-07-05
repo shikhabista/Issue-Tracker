@@ -29,6 +29,12 @@
                     <option value="">Select Labels</option>
                 </select>
             </div>
+            <div class="col-6 mt-2">
+                <label class="form-label">Assignee</label>
+                <select asp-for="UserId" class="form-select" asp-items="@Model.UserList">
+                    <option value="">Select User</option>
+                </select>
+            </div>
 
         </div>
         <div class="card-footer">
