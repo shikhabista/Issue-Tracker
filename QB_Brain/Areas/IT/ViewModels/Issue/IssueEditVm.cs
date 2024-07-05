@@ -1,5 +1,4 @@
-﻿using Base.Dtos.IT;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace IT_Web.Areas.IT.VIewModels.Issue;
 
@@ -12,5 +11,5 @@ public class IssueEditVm
     public DateTime Date { get; set; }
     public long RepositoryId { get; set; }
     public SelectList LabelList { get; set; }
-    public List<long> LabelIds { get; set; }
+    public List<long>? LabelIds { get; set; }
 }

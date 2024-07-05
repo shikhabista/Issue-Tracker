@@ -77,15 +77,18 @@ public class IssueController : Controller
             };
             var issue = await _issueService.CreateIssue(issueCreateDto);
 
-            foreach (var labelId in vm.LabelIds)
+            if (vm.LabelIds != null)
             {
-                var dto = new IssueLabel
+                foreach (var labelId in vm.LabelIds)
                 {
-                    IssueId = issue.id,
-                    LabelId = labelId,
-                    RecDate = DateTime.Now
-                };
-                await _issueLabelService.AddIssueLabel(dto);
+                    var dto = new IssueLabel
+                    {
+                        IssueId = issue.id,
+                        LabelId = labelId,
+                        RecDate = DateTime.Now
+                    };
+                    await _issueLabelService.AddIssueLabel(dto);
+                }
             }
 
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});
@@ -141,17 +144,20 @@ public class IssueController : Controller
                 last_updated = DateTime.Now,
             };
             var issue = await _issueService.UpdateIssue(issueEditDto);
-
+            
             await _issueLabelService.RemoveIssueLabel(vm.Id);
-            foreach (var labelId in vm.LabelIds)
+            if (vm.LabelIds != null)
             {
-                var dto = new IssueLabel
+                foreach (var labelId in vm.LabelIds)
                 {
-                    IssueId = issueEditDto.id,
-                    LabelId = labelId,
-                    RecDate = DateTime.Now
-                };
-                await _issueLabelService.AddIssueLabel(dto);
+                    var dto = new IssueLabel
+                    {
+                        IssueId = issueEditDto.id,
+                        LabelId = labelId,
+                        RecDate = DateTime.Now
+                    };
+                    await _issueLabelService.AddIssueLabel(dto);
+                }
             }
 
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});

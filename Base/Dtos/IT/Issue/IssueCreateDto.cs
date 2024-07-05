@@ -11,5 +11,5 @@ public class IssueCreateDto
     public DateTime Date { get; set; }
     public long RepositoryId { get; set; }
     public DateTime? LastUpdated { get; set; }
-    public List<long> LabelIds { get; set; }
+    public List<long>? LabelIds { get; set; }
 }
