@@ -63,12 +63,13 @@ public class UserService : IUserService
             Name = dto.Name,
             UserName = dto.UserName,
             NormalizedUserName = dto.UserName.ToLower(),
-            Email = dto.UserName,
-            NormalizedEmail = dto.UserName.ToUpper(),
+            Email = dto.Email,
+            NormalizedEmail = dto.Email.ToUpper(),
             ContactNo = dto.ContactNo,
             Address = dto.Address,
             Branch = await _branchRepo.FindOrThrowAsync(dto.BranchId),
-            PasswordHash = Crypter.Encrypt(dto.Password)
+            PasswordHash = Crypter.Encrypt(dto.Password),
+            SecurityStamp = ""
         };
         await _uow.CreateAsync(user);
         await _uow.CommitAsync();
@@ -81,6 +82,8 @@ public class UserService : IUserService
         user.Name = dto.Name;
         user.Address = dto.Address;
         user.ContactNo = dto.ContactNo;
+        user.Email = dto.Email;
+        user.NormalizedEmail = dto.Email.ToUpper();
         _uow.Update(user);
         await _uow.CommitAsync();
     }

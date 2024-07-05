@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Base.Entities.Interfaces;
 
 namespace Base.Entities;
 
 [Table("user", Schema = "Base")]
-public class User
+public class User : IBaseEntity
 {
     public long Id { get; set; }
     public string Name { get; set; }

@@ -1,7 +1,84 @@
-﻿@model List<Base.Entities.User>
-
-@{
-    ViewBag.Title = "Users";
-    Layout = "_Layout";
-}
-
+﻿@model IEnumerable<IT_Web.Areas.Admin.ViewModels.UserVm>
+<div class="d-flex flex-column gap-1">
+    <form method="get" class="fs-5">
+        <div class="card">
+            <div class="card-body card-body-filter">
+                <div class="d-flex flex-wrap gap-3 align-items-end">
+                    <div class="col-2">
+    
+                        <label>Name</label>
+                        <input type="text" class="form-control"/>
+    
+                    </div>
+                    <div class="col-2">
+    
+                        <label>Status</label>
+                        <input type="text" class="form-control"/>
+    
+                    </div>
+    
+                    <div>
+                        <button class="btn btn-primary ">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    <div class="container-xl p-0 d-flex flex-column">
+        <div>
+            <strong style="font-size: 20px">User Details</strong>
+        </div>
+    
+        <table class="table table_bold table-bordered table-sm">
+            <thead>
+            <tr>
+                <th>SN</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model != null)
+            {
+                var sn = 1;
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@sn</td>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ContactNo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                        <td>
+                            <a class="btn btn-ghost-linkedin btn-sm" asp-area="Admin" asp-controller="User" asp-action="Update"
+                               asp-route-id="@item.Id">
+                                Edit
+                            </a>
+    
+                            <a class="btn  btn-ghost-linkedin btn-sm">Deactive</a>
+                            <a class="btn  btn-ghost-linkedin btn-sm" asp-area="Admin" asp-controller="User" asp-action="UpdatePassword"
+                               asp-route-id="@item.Id">
+                                Reset Password
+                            </a>
+                        </td>
+                    </tr>
+                    sn++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7">No data available</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        @Html.Partial("Partials/_FooterView")
+    </div>
+</div>

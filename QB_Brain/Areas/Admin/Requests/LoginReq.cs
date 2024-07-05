@@ -1,4 +1,4 @@
-﻿namespace IT_Web.Areas.v1.Admin.Requests;
+﻿namespace IT_Web.Areas.Admin.Requests;
 
 public class LoginReq
 {

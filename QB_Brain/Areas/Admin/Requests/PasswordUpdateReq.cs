@@ -1,8 +1,9 @@
-﻿namespace IT_Web.Areas.Admin.Requests;
+namespace IT_Web.Areas.Admin.Requests;
 
-public class UserPasswordUpdateVm
+public class PasswordUpdateReq
 {
     public long Id { get; set; }
     public string OldPassword { get; set; }
     public string NewPassword { get; set; }
+    public string ConfirmPassword { get; set; }
 }

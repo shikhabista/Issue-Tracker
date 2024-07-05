@@ -1,0 +1,50 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IT_Web.Areas.Admin.Requests.UserAddRequest;
+<div class="container-xl" style="margin-top: 1.5%;">
+<div class="card col-12">
+    <h5 class="card-header">User Registration</h5>
+    <form method="post" asp-area="Admin" asp-controller="User" asp-action="Create">
+        <div class="card-body">
+            <div class="d-flex flex-wrap gap-3">
+                <div class="col col-mx-w-20">
+                    <label class="required" for="Name">Name</label>
+                    <input class="form-control" asp-for="Name" type="text" required/>
+                </div>
+             
+                <div class="col col-mx-w-20">
+                    <label class="required" for="Address">Address</label>
+                    <input class="form-control" asp-for="Address" type="text" required/>
+
+                </div>
+            
+                <div class="col col-mx-w-20">
+                    <label class="required" for="ContactNo">Contact</label>
+                    <input class="form-control" asp-for="ContactNo" type="number" required/>
+
+                </div>
+                <div class="col col-mx-w-20">
+                    <label for="Email">Email</label>
+                    <input class="form-control" asp-for="Email" type="email"/>
+                </div>
+                <div class="col col-mx-w-20">
+                    <label for="UserName">Username</label>
+                    <input class="form-control" asp-for="UserName" type="text"/>
+                </div>
+                <div class="col col-mx-w-20">
+                    <label for="Password">Password</label>
+                    <input class="form-control" asp-for="Password" type="text"/>
+                </div>
+                <div class="col col-mx-w-20">
+                    <label for="ConfirmPass">Confirm Password</label>
+                    <input class="form-control" asp-for="ConfirmPassword" type="text"/>
+                </div>
+            
+            </div>
+       
+            <div>
+                <button style="margin-top: 2%" type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </div>
+    </form>
+</div>
+</div>

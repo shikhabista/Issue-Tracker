@@ -1,4 +1,11 @@
-﻿.form-label{
+﻿.col-mx-w-20{
+    min-width: 20rem;
+}
+.required::after{
+    content: "*";
+    color: red;
+}
+.form-label{
     margin-bottom: 0 !important;
 }
 .h-11{

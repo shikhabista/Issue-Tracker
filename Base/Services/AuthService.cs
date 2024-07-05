@@ -42,4 +42,10 @@ public class AuthService : IAuthService
         await httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(claimsIdentity));
     }
+
+    public async Task LogOut()
+    {
+        if (_httpContextAccessor.HttpContext == null) return;
+        await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
 }
