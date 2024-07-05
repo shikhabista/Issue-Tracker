@@ -6,4 +6,5 @@ public class IssueListVm
 {
     public string Repository { get; set; }
     public List<IssueDto> IssueList { get; set; }
+    public long RepositoryId { get; set; }
 }

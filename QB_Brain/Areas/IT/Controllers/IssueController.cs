@@ -35,7 +35,8 @@ public class IssueController : Controller
             var issueReport = new IssueListVm
             {
                 IssueList = report,
-                Repository = repoName
+                Repository = repoName,
+                RepositoryId = repositoryId
             };
             return View(issueReport);
         }
