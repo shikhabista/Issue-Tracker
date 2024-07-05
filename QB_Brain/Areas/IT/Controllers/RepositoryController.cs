@@ -115,7 +115,7 @@ public class RepositoryController : Controller
         }
         catch (Exception e)
         {
-            _logger.LogError("Error creating repository");
+            _logger.LogError("Error editing repository");
             return this.SendError(e.Message);
         }
     }
