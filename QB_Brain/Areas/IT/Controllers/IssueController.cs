@@ -1,4 +1,5 @@
-﻿using Base.Dtos.IT.Issue;
+﻿using Base.Dtos.IT;
+using Base.Dtos.IT.Issue;
 using Base.Entities;
 using Base.Enums;
 using Base.Services.Interfaces;
@@ -116,6 +117,44 @@ public class IssueController : Controller
                 LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name)),
             };
             return View(vm);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error");
+            return this.SendError(e.Message);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(IssueEditVm vm)
+    {
+        try
+        {
+            var issueEditDto = new IssueDto
+            {
+                id = vm.Id,
+                title = vm.Title,
+                description = vm.Description,
+                issue_status = (long)IssueStatusEnum.Open,
+                date = DateTime.Now,
+                repository_id = vm.RepositoryId,
+                last_updated = DateTime.Now,
+            };
+            var issue = await _issueService.UpdateIssue(issueEditDto);
+            
+            await _issueLabelService.RemoveIssueLabel(vm.Id);
+            foreach (var labelId in vm.LabelIds)
+            {
+                var dto = new IssueLabel
+                {
+                    IssueId = issue.id,
+                    LabelId = labelId,
+                    RecDate = DateTime.Now
+                };
+                await _issueLabelService.AddIssueLabel(dto);
+            }
+
+            return Redirect("/IT/Repository/Index");
         }
         catch (Exception e)
         {

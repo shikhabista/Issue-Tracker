@@ -30,6 +30,10 @@
                                     </svg>
                                 </i>
                                 <a href="#" class="text-black"> @item.title </a>
+                                @foreach (var label in item.label_names)
+                                {
+                                    <span class="badge bg-azure-lt"> @label</span>
+                                }
                             </td>
                             @if (item.issue_status == 1)
                             {

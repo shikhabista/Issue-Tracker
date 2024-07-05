@@ -1,4 +1,4 @@
-﻿using Base.Dtos.IT;
+﻿using Base.Dtos.IT.Issue;
 
 namespace IT_Web.Areas.IT.VIewModels.Issue;
 

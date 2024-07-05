@@ -10,6 +10,6 @@ public interface IIssueLabelService
     Task<IssueLabel> GetIssueLabel(long issueId, long labelId);
     Task<List<IssueLabel>> GetIssueLabelList();
     Task<IssueLabel> UpdateIssueLabel(IssueLabel issueLabel);
-    Task<bool> RemoveIssueLabel(long id);
+    Task<bool> RemoveIssueLabel(long issueId);
     Task<List<long>> GetLabelIdsOf(long issueId);
 }

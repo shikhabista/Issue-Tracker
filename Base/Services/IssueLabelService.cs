@@ -17,7 +17,7 @@ public class IssueLabelService : IIssueLabelService
     public async Task AddIssueLabel(IssueLabel issueLabel)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create(
+        await _dbService.ExecuteQuery(
             "INSERT INTO it.issue_label (issue_id, label_id, rec_date) VALUES (@IssueId, @LabelId, @RecDate)",
             issueLabel);
         tx.Complete();
@@ -61,10 +61,10 @@ public class IssueLabelService : IIssueLabelService
         throw new NotImplementedException();
     }
 
-    public async Task<bool> RemoveIssueLabel(long id)
+    public async Task<bool> RemoveIssueLabel(long issueId)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create("DELETE FROM it.issue WHERE id=@Id", new { id });
+        await _dbService.ExecuteQuery("DELETE FROM it.issue WHERE issue_id=@issueId", new { id = issueId });
         tx.Complete();
         return true;
     }

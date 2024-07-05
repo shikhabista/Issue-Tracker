@@ -1,6 +1,7 @@
 ﻿using System.Transactions;
 using Base.Dtos;
 using Base.Dtos.IT;
+using Base.Dtos.IT.Issue;
 using Base.Entities;
 using Base.Services.Interfaces;
 
@@ -18,7 +19,7 @@ public class RepositoryService : IRepositoryService
     public async Task CreateRepository(Repository repo)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create(
+        await _dbService.ExecuteQuery(
             "INSERT INTO it.repository (name, description, visibility, rec_by_id, rec_date, status, branch) VALUES (@Name, @Description, @Visibility, @RecById, @RecDate, @Status, @Branch)",
             repo);
         tx.Complete();
@@ -43,7 +44,7 @@ public class RepositoryService : IRepositoryService
     public async Task<Repository> UpdateRepository(Repository repository)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create(
+        await _dbService.ExecuteQuery(
             "Update it.repository SET name=@Name, description=@Description, visibility=@Visibility WHERE id=@Id",
             repository);
         tx.Complete();
@@ -53,7 +54,7 @@ public class RepositoryService : IRepositoryService
     public async Task<bool> DeleteRepository(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create("DELETE FROM it.repository WHERE id=@Id", new {id});
+        await _dbService.ExecuteQuery("DELETE FROM it.repository WHERE id=@Id", new {id});
         tx.Complete();
         return true;
     }

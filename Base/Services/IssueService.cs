@@ -1,8 +1,6 @@
 ﻿using System.Transactions;
 using Base.Dtos;
-using Base.Dtos.IT;
 using Base.Dtos.IT.Issue;
-using Base.Entities;
 using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
 
@@ -48,29 +46,29 @@ public class IssueService : IIssueService
         return issueList;
     }
 
-    public async Task<Issue> UpdateIssue(Issue issue)
+    public async Task<IssueDto> UpdateIssue(IssueDto dto)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create(
-            "Update it.issue SET title=@Title, description=@Description, issueStatus=@IssueStatus, date=@Date, " +
-            "assigned_id=@AssignedId, repository_id=@RepositoryId, last_updated = @LastUpdated  WHERE id=@Id",
-            issue);
+        await _dbService.ExecuteQuery(
+            "Update it.issue SET title=@title, description=@description, issue_status=@isssue_status, date=@date, " +
+            "assigned_id=@assigned_id, repository_id=@repository_id, last_updated = @last_updated  WHERE id=@Id",
+            dto);
         tx.Complete();
-        return issue;
+        return dto;
     }
 
     public async Task<bool> CloseIssue(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create("Update it.issue Set issue_status = 2 WHERE id=@Id", new { id });
+        await _dbService.ExecuteQuery("Update it.issue Set issue_status = 2 WHERE id=@Id", new { id });
         tx.Complete();
         return true;
     }
-    
+
     public async Task<bool> OpenIssue(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.Create("Update it.issue Set issue_status = 1 WHERE id=@Id", new { id });
+        await _dbService.ExecuteQuery("Update it.issue Set issue_status = 1 WHERE id=@Id", new { id });
         tx.Complete();
         return true;
     }
@@ -86,6 +84,14 @@ public class IssueService : IIssueService
         var repository = await _dbService.GetAsync<RepositoryDto>("SELECT * FROM it.repository where id=@repositoryId",
             new { repositoryId });
         var repoName = repository.Name;
+        
+        foreach (var item in list)
+        {
+            var issueLabelQuery = $"select l.name from it.issue_label il join it.label l on il.label_id = l.id where issue_id = @id";
+            var labelNames = await _dbService.GetAll<string>(issueLabelQuery, new {id = item.id});
+            item.label_names = labelNames;
+        }
+        
         return (list, repoName);
     }
 }

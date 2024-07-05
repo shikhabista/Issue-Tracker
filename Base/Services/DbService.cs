@@ -33,7 +33,7 @@ public class DbService : IDbService
         return result;
     }
 
-    public async Task<int> Create(string command, object @params)
+    public async Task<int> ExecuteQuery(string command, object @params)
     {
         int result;
 

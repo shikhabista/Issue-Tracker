@@ -1,10 +1,11 @@
-﻿namespace Base.Dtos.IT;
+﻿namespace Base.Dtos.IT.Issue;
 
 public class IssueDto
 {
+    public List<string> label_names;
     public long id { get; set; }
     public string title { get; set; }
-    public string description { get; set; }
+    public string? description { get; set; }
     public long assignee_id { get; set; }
     public long repository_id { get; set; }
     public DateTime date { get; set; }

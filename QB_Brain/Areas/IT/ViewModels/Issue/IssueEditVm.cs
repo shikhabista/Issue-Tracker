@@ -5,7 +5,7 @@ namespace IT_Web.Areas.IT.VIewModels.Issue;
 
 public class IssueEditVm
 {
-    public object Id { get; set; }
+    public long Id { get; set; }
     public string Status { get; set; }
     public string Title { get; set; }
     public string? Description { get; set; }
