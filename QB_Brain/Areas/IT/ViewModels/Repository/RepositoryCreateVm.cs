@@ -1,6 +1,4 @@
-﻿using Base.Entities;
-
-namespace IT_Web.Areas.IT.VIewModels;
+﻿namespace IT_Web.Areas.IT.ViewModels.Repository;
 
 public class RepositoryCreateVm
 {

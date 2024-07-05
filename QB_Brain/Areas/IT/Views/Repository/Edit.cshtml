@@ -1,4 +1,4 @@
-﻿@model IT_Web.Areas.IT.ViewModels.Repository.RepositoryCreateVm
+﻿@model IT_Web.Areas.IT.VIewModels.Repository.RepositoryEditVm
 @{
     ViewBag.Title = "New Repository";
     Layout = "_Layout";
@@ -7,14 +7,21 @@
 <form action="" method="post">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Create New Repository</h3>
+            <h3 class="card-title">Edit Repository</h3>
         </div>
 
         <div class="card-body">
-            <p class="card-subtitle">
-                A repository contains all project files, including the revision history. Already have a project repository elsewhere?
-            </p>
-
+            
+            <div class="col-6 mb-2" hidden>
+                <input class="form-control" type="text" asp-for="Id">
+            </div>
+            <div class="col-6 mb-2" hidden>
+                <input class="form-control" type="text" asp-for="Branch">
+            </div>
+            <div class="col-6 mb-2" hidden>
+                <input class="form-control" type="text" asp-for="RecDate">
+            </div>
+            
             <div class="col-6 mb-2">
                 <label class="form-label required" for="">Name</label>
                 <input class="form-control" type="text" asp-for="Name">
@@ -62,7 +69,7 @@
 
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary"> Create repository</button>
+                <button type="submit" class="btn btn-primary"> Edit repository</button>
             </div>
         </div>
     </div>
