@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IT_Web.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240704124644_New Models Created")]
+    [Migration("20240705045028_New Models Created")]
     partial class NewModelsCreated
     {
         /// <inheritdoc />
@@ -137,8 +137,8 @@ namespace IT_Web.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("label_id");
 
-                    b.Property<long>("RecDate")
-                        .HasColumnType("bigint")
+                    b.Property<DateTime>("RecDate")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("rec_date");
 
                     b.HasKey("Id")

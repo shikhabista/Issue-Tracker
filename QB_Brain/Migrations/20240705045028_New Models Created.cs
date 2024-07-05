@@ -101,7 +101,7 @@ namespace IT_Web.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     issue_id = table.Column<long>(type: "bigint", nullable: false),
                     label_id = table.Column<long>(type: "bigint", nullable: false),
-                    rec_date = table.Column<long>(type: "bigint", nullable: false)
+                    rec_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

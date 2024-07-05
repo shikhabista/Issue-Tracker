@@ -21,14 +21,15 @@ public class IssueService : IIssueService
         _issueLabelService = issueLabelService;
     }
 
-    public async Task CreateIssue(IssueCreateDto issue)
+    public async Task<IssueDto> CreateIssue(IssueCreateDto issue)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData(
-            "INSERT INTO it.issue (title, description, issue_status, date,repository_id, assignee_id, last_updated) " +
-            "VALUES (@Title, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId, @LastUpdated)",
-            issue);
+        var query = "INSERT INTO it.issue (title, description, issue_status, date,repository_id, assignee_id, last_updated) " +
+                    "VALUES (@Title, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId, @LastUpdated)"
+                    + "Returning *";
+        var createdIssue = await _dbService.CreateAndReturn<IssueDto>(query, issue);
         tx.Complete();
+        return createdIssue;
     }
 
     public async Task<IssueDto> GetIssue(long id)
@@ -50,7 +51,7 @@ public class IssueService : IIssueService
     public async Task<Issue> UpdateIssue(Issue issue)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData(
+        await _dbService.Create(
             "Update it.issue SET title=@Title, description=@Description, issueStatus=@IssueStatus, date=@Date, " +
             "assigned_id=@AssignedId, repository_id=@RepositoryId, last_updated = @LastUpdated  WHERE id=@Id",
             issue);
@@ -58,10 +59,18 @@ public class IssueService : IIssueService
         return issue;
     }
 
-    public async Task<bool> DeleteIssue(long id)
+    public async Task<bool> CloseIssue(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData("DELETE FROM it.issue WHERE id=@Id", new { id });
+        await _dbService.Create("Update it.issue Set issue_status = 2 WHERE id=@Id", new { id });
+        tx.Complete();
+        return true;
+    }
+    
+    public async Task<bool> OpenIssue(long id)
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        await _dbService.Create("Update it.issue Set issue_status = 1 WHERE id=@Id", new { id });
         tx.Complete();
         return true;
     }
@@ -74,10 +83,9 @@ public class IssueService : IIssueService
         {
             repositoryId
         })).ToList();
-        var repository = await _dbService.GetAsync<RepositoryDto>("SELECT * FROM it.repository where id=@repositoryId", 
+        var repository = await _dbService.GetAsync<RepositoryDto>("SELECT * FROM it.repository where id=@repositoryId",
             new { repositoryId });
         var repoName = repository.Name;
         return (list, repoName);
-       
     }
 }

@@ -1,9 +1,7 @@
-﻿using Base.Dtos.IT;
-using Base.Dtos.IT.Issue;
+﻿using Base.Dtos.IT.Issue;
 using Base.Entities;
 using Base.Enums;
 using Base.Services.Interfaces;
-using IT_Web.Areas.IT.VIewModels;
 using IT_Web.Areas.IT.VIewModels.Issue;
 using IT_Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +16,7 @@ public class IssueController : Controller
     private readonly ILogger<IssueController> _logger;
     private readonly IIssueService _issueService;
     private readonly ILabelService _labelService;
-    private IIssueLabelService _issueLabelService;
+    private readonly IIssueLabelService _issueLabelService;
 
     public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService, IIssueLabelService issueLabelService)
     {
@@ -34,7 +32,7 @@ public class IssueController : Controller
         try
         {
             var (report, repoName) = await _issueService.GetIssuesOf(repositoryId);
-            var issueReport = new IssueListVm()
+            var issueReport = new IssueListVm
             {
                 IssueList = report,
                 Repository = repoName
@@ -66,7 +64,7 @@ public class IssueController : Controller
     {
         try
         {
-            var dto = new IssueCreateDto
+            var issueCreateDto = new IssueCreateDto
             {
                 Title = vm.Title,
                 Description = vm.Description,
@@ -76,7 +74,19 @@ public class IssueController : Controller
                 LastUpdated = DateTime.Now,
                 LabelIds = vm.LabelIds
             };
-            await _issueService.CreateIssue(dto);
+            var issue = await _issueService.CreateIssue(issueCreateDto);
+
+            foreach (var labelId in vm.LabelIds)
+            {
+                var dto = new IssueLabel
+                {
+                    IssueId = issue.id,
+                    LabelId = labelId,
+                    RecDate = DateTime.Now
+                };
+                await _issueLabelService.AddIssueLabel(dto);
+            }
+
             return RedirectToAction(nameof(Index));
         }
         catch (Exception e)
@@ -115,11 +125,26 @@ public class IssueController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Delete(long id)
+    public async Task<IActionResult> OpenIssue(long id)
     {
         try
         {
-            await _labelService.DeleteLabel(id);
+            await _issueService.OpenIssue(id);
+            return RedirectToAction(nameof(New));
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error");
+            return this.SendError(e.Message);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CloseIssue(long id)
+    {
+        try
+        {
+            await _issueService.CloseIssue(id);
             return RedirectToAction(nameof(New));
         }
         catch (Exception e)

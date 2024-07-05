@@ -134,8 +134,8 @@ namespace IT_Web.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("label_id");
 
-                    b.Property<long>("RecDate")
-                        .HasColumnType("bigint")
+                    b.Property<DateTime>("RecDate")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("rec_date");
 
                     b.HasKey("Id")

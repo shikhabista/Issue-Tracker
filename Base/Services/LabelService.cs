@@ -17,7 +17,7 @@ public class LabelService : ILabelService
     public async Task CreateLabel(Label label)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData(
+        await _dbService.Create(
             "INSERT INTO it.label (name,description, code, status, rec_date) " +
             "VALUES (@Name, @Description, @Code, @Status, @RecDate)",
             label);
@@ -43,7 +43,7 @@ public class LabelService : ILabelService
     public async Task<Label> UpdateLabel(Label label)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData(
+        await _dbService.Create(
             "Update it.label SET name=@Name, description=@Description, code=@Code WHERE id=@Id",
             label);
         tx.Complete();
@@ -53,7 +53,7 @@ public class LabelService : ILabelService
     public async Task<bool> DeleteLabel(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData("DELETE FROM it.label WHERE id=@id", new { id });
+        await _dbService.Create("DELETE FROM it.label WHERE id=@id", new { id });
         tx.Complete();
         return true;
     }

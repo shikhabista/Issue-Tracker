@@ -9,5 +9,5 @@ public class IssueDto
     public long repository_id { get; set; }
     public DateTime date { get; set; }
     public long issue_status { get; set; }
-    public DateTime LastUpdated { get; set; }
+    public DateTime last_updated { get; set; }
 }

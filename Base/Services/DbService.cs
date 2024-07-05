@@ -18,9 +18,9 @@ public class DbService : IDbService
     public async Task<T> GetAsync<T>(string command, object @params)
     {
         T result;
-        
+
         result = (await _db.QueryAsync<T>(command, @params).ConfigureAwait(false)).FirstOrDefault();
-        
+
         return result;
     }
 
@@ -33,12 +33,19 @@ public class DbService : IDbService
         return result;
     }
 
-    public async Task<int> EditData(string command, object @params)
+    public async Task<int> Create(string command, object @params)
     {
         int result;
 
         result = await _db.ExecuteAsync(command, @params);
 
+        return result;
+    }
+
+    public async Task<T> CreateAndReturn<T>(string command, object @params)
+    {
+        T result;
+        result = await _db.QuerySingleOrDefaultAsync<T>(command, @params);
         return result;
     }
 }

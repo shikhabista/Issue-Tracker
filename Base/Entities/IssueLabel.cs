@@ -10,5 +10,5 @@ public class IssueLabel
     public long IssueId { get; set; }
     public virtual Label Label { get; set; }
     public long LabelId { get; set; }
-    public long RecDate { get; set; }
+    public DateTime RecDate { get; set; }
 }

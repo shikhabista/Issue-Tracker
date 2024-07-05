@@ -6,10 +6,11 @@ namespace Base.Services.Interfaces;
 
 public interface IIssueService
 {
-    Task CreateIssue(IssueCreateDto issue);
+    Task<IssueDto> CreateIssue(IssueCreateDto issue);
     Task<IssueDto> GetIssue(long id);
     Task<List<IssueDto>> GetIssueList();
     Task<Issue> UpdateIssue(Issue issue);
-    Task<bool> DeleteIssue(long id);
+    Task<bool> CloseIssue(long id);
+    Task<bool> OpenIssue(long id);
     Task<(List<IssueDto> list, string repoName)> GetIssuesOf(long repoId);
 }

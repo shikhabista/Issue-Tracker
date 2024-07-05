@@ -17,8 +17,8 @@ public class IssueLabelService : IIssueLabelService
     public async Task AddIssueLabel(IssueLabel issueLabel)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData(
-            "INSERT INTO it.issue_label (issue_id, label_id) VALUES (@issueId, @labelId)",
+        await _dbService.Create(
+            "INSERT INTO it.issue_label (issue_id, label_id, rec_date) VALUES (@IssueId, @LabelId, @RecDate)",
             issueLabel);
         tx.Complete();
     }
@@ -34,9 +34,9 @@ public class IssueLabelService : IIssueLabelService
     public async Task<List<long>> GetLabelIdsOf(long issueId)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var labels = await _dbService.GetAll<IssueLabelDto>("SELECT * FROM it.issue_label where id=@issueId", new { issueId });
+        var labelIds = await _dbService.GetAll<long>("SELECT label_id FROM it.issue_label where issue_id=@issueId", new { issueId });
         tx.Complete();
-        return labels.Select(a => a.label_id).ToList();
+        return labelIds;
     }
 
     public async Task<IssueLabel> GetIssueLabel(long issueId, long labelId)
@@ -64,7 +64,7 @@ public class IssueLabelService : IIssueLabelService
     public async Task<bool> RemoveIssueLabel(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.EditData("DELETE FROM it.issue WHERE id=@Id", new { id });
+        await _dbService.Create("DELETE FROM it.issue WHERE id=@Id", new { id });
         tx.Complete();
         return true;
     }
