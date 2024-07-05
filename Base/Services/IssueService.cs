@@ -1,6 +1,7 @@
 ﻿using System.Transactions;
 using Base.Dtos;
 using Base.Dtos.IT.Issue;
+using Base.Entities;
 using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
 
@@ -50,7 +51,7 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.ExecuteQuery("Update it.issue SET title=@title, description=@description, issue_status=@issue_status, " +
-                                      "date=@date, repository_id=@repository_id, last_updated=@last_updated WHERE id=@id",
+                                      "date=@date, repository_id=@repository_id, last_updated=@last_updated, assignee_id=@assignee_id WHERE id=@id",
             dto);
         tx.Complete();
         return dto;
@@ -89,6 +90,10 @@ public class IssueService : IIssueService
             var issueLabelQuery = $"select l.name from it.issue_label il join it.label l on il.label_id = l.id where issue_id = @id";
             var labelNames = await _dbService.GetAll<string>(issueLabelQuery, new { id = item.id });
             item.label_names = labelNames;
+            
+            var userName = await _dbService.GetAsync<string>("SELECT name FROM base.user where id=@userId",
+                new { userId = item.assignee_id });
+            item.assignee = userName;
         }
 
         return (list, repoName);

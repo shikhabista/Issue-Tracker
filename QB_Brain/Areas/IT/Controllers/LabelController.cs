@@ -13,7 +13,7 @@ public class LabelController : Controller
 {
     private readonly ILogger<LabelController> _logger;
     private readonly ILabelService _labelService;
-    private IIssueLabelService _issueLabelService;
+    private readonly IIssueLabelService _issueLabelService;
 
     public LabelController(ILogger<LabelController> logger, ILabelService labelService, IIssueLabelService issueLabelService)
     {
@@ -43,6 +43,8 @@ public class LabelController : Controller
     {
         try
         {
+            var isDuplicate = await _labelService.CheckIfDuplicateName(vm.Code.ToLower().Trim());
+            if (isDuplicate) throw new Exception($"Label Code {vm.Code} already exists.");
             var label = new Label
             {
                 Name = vm.Name,

@@ -10,4 +10,5 @@ public interface ILabelService
     Task<List<Label>> GetLabelList();
     Task<Label> UpdateLabel(Label label);
     Task<bool> DeleteLabel(long id);
+    Task<bool> CheckIfDuplicateName(string code);
 }
