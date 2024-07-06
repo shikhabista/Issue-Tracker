@@ -112,6 +112,7 @@ public class RepositoryController : Controller
     {
         try
         {
+            if (!ModelState.IsValid) return View(vm);
             var isDuplicate = await _repositoryService.CheckIfDuplicateName(vm.Name.ToLower().Trim());
             if (isDuplicate) throw new Exception("Duplicate repository name");
             var repo = new Repository

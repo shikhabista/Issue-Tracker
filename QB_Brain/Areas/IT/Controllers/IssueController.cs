@@ -74,6 +74,13 @@ public class IssueController : Controller
     {
         try
         {
+            var labels = await _labelService.GetLabelList();
+            var users = await _userRepo.FindAllAsync();
+
+            vm.LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name));
+            vm.UserList = new SelectList(users, nameof(Base.Entities.User.Id), nameof(Base.Entities.User.Name));
+            vm.RepositoryId = vm.RepositoryId;
+
             if (!ModelState.IsValid) return View(vm);
             var issueCreateDto = new IssueCreateDto
             {
@@ -81,7 +88,7 @@ public class IssueController : Controller
                 Description = vm.Description,
                 IssueStatus = IssueStatusEnum.Open,
                 Date = DateTime.Now,
-                RepositoryId = vm.RepositoryId,
+                RepositoryId = (long)vm.RepositoryId,
                 LastUpdated = DateTime.Now,
                 LabelIds = vm.LabelIds,
                 AssigneeId = vm.UserId
@@ -101,6 +108,7 @@ public class IssueController : Controller
                     await _issueLabelService.AddIssueLabel(dto);
                 }
             }
+
             _notificationHelper.SetSuccessMsg("Issue created successfully");
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
@@ -155,7 +163,7 @@ public class IssueController : Controller
                 description = vm.Description,
                 issue_status = (long)IssueStatusEnum.Open,
                 date = DateTime.Now,
-                repository_id = vm.RepositoryId,
+                repository_id = (long)vm.RepositoryId,
                 last_updated = DateTime.Now,
                 assignee_id = vm.UserId
             };
@@ -215,7 +223,6 @@ public class IssueController : Controller
         {
             _notificationHelper.SetErrorMsg(e.Message);
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
-
         }
     }
 }

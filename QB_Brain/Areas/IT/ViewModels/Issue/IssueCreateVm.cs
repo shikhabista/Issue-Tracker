@@ -7,11 +7,11 @@ public class IssueCreateVm
 {
     [Required(ErrorMessage = "Issue title is required")]
     public string Title { get; set; }
-    public string Description { get; set; }
+    public string? Description { get; set; }
     
     public List<long>? LabelIds { get; set; }
     public long? UserId { get; set; }
-    public SelectList LabelList { get; set; }
-    public long RepositoryId { get; set; }
-    public SelectList UserList { get; set; }
+    public SelectList? LabelList { get; set; }
+    public long? RepositoryId { get; set; }
+    public SelectList? UserList { get; set; }
 }
