@@ -3,6 +3,7 @@ using Base.Services;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels.Label;
 using IT_Web.Extensions;
+using IT_Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IT_Web.Areas.IT.Controllers;
@@ -14,12 +15,14 @@ public class LabelController : Controller
     private readonly ILogger<LabelController> _logger;
     private readonly ILabelService _labelService;
     private readonly IIssueLabelService _issueLabelService;
+    private readonly INotificationHelper _notificationHelper;
 
-    public LabelController(ILogger<LabelController> logger, ILabelService labelService, IIssueLabelService issueLabelService)
+    public LabelController(ILogger<LabelController> logger, ILabelService labelService, IIssueLabelService issueLabelService, INotificationHelper notificationHelper)
     {
         _logger = logger;
         _labelService = labelService;
         _issueLabelService = issueLabelService;
+        _notificationHelper = notificationHelper;
     }
 
     [HttpGet]
@@ -53,12 +56,13 @@ public class LabelController : Controller
                 RecDate = DateTime.Now
             };
             await _labelService.CreateLabel(label);
+            _notificationHelper.SetSuccessMsg("Label created successfully");
             return RedirectToAction(nameof(New));
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return RedirectToAction(nameof(New));
         }
     }
 
@@ -79,8 +83,8 @@ public class LabelController : Controller
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return RedirectToAction(nameof(New));
         }
     }
 
@@ -92,12 +96,13 @@ public class LabelController : Controller
             var issueLabel = await _issueLabelService.CheckIfLabelInUse(id);
             if (issueLabel) throw new Exception("Can't delete label. Label is assigned to an issue");
             await _labelService.DeleteLabel(id);
+            _notificationHelper.SetSuccessMsg("Label deleted successfully");
             return RedirectToAction(nameof(New));
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return RedirectToAction(nameof(New));
         }
     }
 }

@@ -5,6 +5,7 @@ using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels.Issue;
 using IT_Web.Extensions;
+using IT_Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,14 +20,17 @@ public class IssueController : Controller
     private readonly ILabelService _labelService;
     private readonly IIssueLabelService _issueLabelService;
     private readonly IUserRepo _userRepo;
+    private readonly INotificationHelper _notificationHelper;
 
-    public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService, IIssueLabelService issueLabelService, IUserRepo userRepo)
+    public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService, IIssueLabelService issueLabelService, IUserRepo userRepo,
+        INotificationHelper notificationHelper)
     {
         _logger = logger;
         _issueService = issueService;
         _labelService = labelService;
         _issueLabelService = issueLabelService;
         _userRepo = userRepo;
+        _notificationHelper = notificationHelper;
     }
 
     [HttpGet]
@@ -96,13 +100,13 @@ public class IssueController : Controller
                     await _issueLabelService.AddIssueLabel(dto);
                 }
             }
-
+            _notificationHelper.SetSuccessMsg("Issue created successfully");
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return View(vm);
         }
     }
 
@@ -170,12 +174,13 @@ public class IssueController : Controller
                 }
             }
 
+            _notificationHelper.SetSuccessMsg("Issue updated successfully");
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
     }
 
@@ -185,12 +190,13 @@ public class IssueController : Controller
         try
         {
             await _issueService.OpenIssue(id);
+            _notificationHelper.SetSuccessMsg("Issue opened");
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
         }
     }
 
@@ -200,12 +206,14 @@ public class IssueController : Controller
         try
         {
             await _issueService.CloseIssue(id);
+            _notificationHelper.SetSuccessMsg("Issue closed");
             return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
+
         }
     }
 }

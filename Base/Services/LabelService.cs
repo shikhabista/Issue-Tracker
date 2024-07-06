@@ -61,9 +61,9 @@ public class LabelService : ILabelService
     public async Task<bool> CheckIfDuplicateName(string code)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        var repository = await _dbService.GetAsync<Label>($"SELECT * FROM it.repository where lower(code) like '{@code.ToLower()}'", new { code });
+        var label = await _dbService.GetAsync<Label>($"SELECT * FROM it.label where lower(code) like '{@code.ToLower()}'", new { code });
         tx.Complete();
-        bool isDuplicate = repository != null;
+        bool isDuplicate = label != null;
         return isDuplicate;
     }
 }

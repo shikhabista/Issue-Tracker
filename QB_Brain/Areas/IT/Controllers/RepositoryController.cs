@@ -4,6 +4,7 @@ using Base.Services.Interfaces;
 using IT_Web.Areas.IT.ViewModels.Repository;
 using IT_Web.Areas.IT.VIewModels.Repository;
 using IT_Web.Extensions;
+using IT_Web.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IT_Web.Areas.IT.Controllers;
@@ -16,13 +17,16 @@ public class RepositoryController : Controller
     private readonly IRepositoryService _repositoryService;
     private readonly IIssueService _issueService;
     private readonly ICurrentUserProvider _currentUserProvider;
+    private readonly INotificationHelper _notificationHelper;
 
-    public RepositoryController(ILogger<RepositoryController> logger, IRepositoryService repositoryService, IIssueService issueService, ICurrentUserProvider currentUserProvider)
+    public RepositoryController(ILogger<RepositoryController> logger, IRepositoryService repositoryService, IIssueService issueService, ICurrentUserProvider currentUserProvider,
+        INotificationHelper notificationHelper)
     {
         _logger = logger;
         _repositoryService = repositoryService;
         _issueService = issueService;
         _currentUserProvider = currentUserProvider;
+        _notificationHelper = notificationHelper;
     }
 
     [HttpGet]
@@ -67,12 +71,13 @@ public class RepositoryController : Controller
                 RecById = userId
             };
             await _repositoryService.CreateRepository(repo);
+            _notificationHelper.SetSuccessMsg("Repository created successfully");
             return RedirectToAction(nameof(Index));
         }
         catch (Exception e)
         {
-            _logger.LogError("Error creating repository");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return View();
         }
     }
 
@@ -106,6 +111,8 @@ public class RepositoryController : Controller
     {
         try
         {
+            var isDuplicate = await _repositoryService.CheckIfDuplicateName(vm.Name.ToLower().Trim());
+            if (isDuplicate) throw new Exception("Duplicate repository name");
             var repo = new Repository
             {
                 Id = vm.Id,
@@ -116,12 +123,13 @@ public class RepositoryController : Controller
                 Branch = vm.Branch
             };
             await _repositoryService.UpdateRepository(repo);
+            _notificationHelper.SetSuccessMsg("Repository updated successfully");
             return RedirectToAction(nameof(Index));
         }
         catch (Exception e)
         {
-            _logger.LogError("Error editing repository");
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return View();
         }
     }
 }
