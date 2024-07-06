@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IT_Web.Extensions;
+using IT_Web.Helpers;
 using UserPasswordUpdateVm = IT_Web.Areas.Admin.Requests.UserPasswordUpdateVm;
 
 namespace IT_Web.Areas.Admin.Controllers;
@@ -19,12 +20,14 @@ public class UserController : Controller
     private readonly IUserService _userService;
     private readonly IUserRepo _userRepo;
     private readonly ICurrentUserProvider _currentUserProvider;
+    private readonly INotificationHelper _notificationHelper;
 
-    public UserController(IUserService userService, IUserRepo userRepo, ICurrentUserProvider currentUserProvider)
+    public UserController(IUserService userService, IUserRepo userRepo, ICurrentUserProvider currentUserProvider, INotificationHelper notificationHelper)
     {
         _userService = userService;
         _userRepo = userRepo;
         _currentUserProvider = currentUserProvider;
+        _notificationHelper = notificationHelper;
     }
 
     [AllowAnonymous]
@@ -45,7 +48,7 @@ public class UserController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var data = await _userRepo.GetQueryable().Where(x=>x.UserName.ToLower() != "admin@gmail.com").Select(x => new UserVm()
+        var data = await _userRepo.GetQueryable().Where(x => x.UserName.ToLower() != "admin@gmail.com").Select(x => new UserVm()
         {
             Id = x.Id,
             Name = x.Name,
@@ -68,34 +71,27 @@ public class UserController : Controller
     public async Task<IActionResult> Create(UserAddRequest req)
     {
         var confirmpass = req.ConfirmPassword;
-        if (req.Password.Equals(confirmpass))
+        try
         {
-            try
+            if (!req.Password.Equals(confirmpass)) throw new Exception("Confirm password did not match");
+            var branchId = await _currentUserProvider.GetUserBranchId();
+            var userDto = new UserAddDto()
             {
-                var BranchId = await _currentUserProvider.GetUserBranchId();
-                var userDto = new UserAddDto()
-                {
-                    Name = req.Name,
-                    Address = req.Address,
-                    ContactNo = req.ContactNo,
-                    Email = req.Email,
-                    UserName = req.UserName,
-                    Password = req.Password,
-                    BranchId = BranchId
-                };
-                await _userService.Create(userDto);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception e)
-            {
-                return this.SendError(e.Message);
-                
-            }
-
+                Name = req.Name,
+                Address = req.Address,
+                ContactNo = req.ContactNo,
+                Email = req.Email,
+                UserName = req.UserName,
+                Password = req.Password,
+                BranchId = branchId
+            };
+            await _userService.Create(userDto);
+            _notificationHelper.SetSuccessMsg("User created successfully");
+            return RedirectToAction(nameof(Index));
         }
-        else
+        catch (Exception e)
         {
-            return this.SendError("Confirm password doesn't matched");
+            _notificationHelper.SetErrorMsg(e.Message);
             return View(req);
         }
     }
@@ -114,9 +110,9 @@ public class UserController : Controller
         };
         return View(Updatereq);
     }
-    
+
     [HttpPost]
-    public async Task<IActionResult> Update(long id,UserUpdateReq req)
+    public async Task<IActionResult> Update(long id, UserUpdateReq req)
     {
         try
         {
@@ -128,26 +124,28 @@ public class UserController : Controller
                 ContactNo = req.ContactNo
             };
             var user = await _userRepo.FindOrThrowAsync(id);
-            await _userService.Update(user,userUpdateDto);
+            await _userService.Update(user, userUpdateDto);
+            _notificationHelper.SetSuccessMsg("User updated successfully");
             return RedirectToAction(nameof(Index));
         }
         catch (Exception e)
         {
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return View(req);
         }
     }
 
     [HttpGet]
-        public async Task<IActionResult> UpdatePassword(long id)
+    public async Task<IActionResult> UpdatePassword(long id)
+    {
+        var data = await _userRepo.GetQueryable().Where(x => x.Id == id).SingleOrDefaultAsync();
+        var ResetPass = new PasswordUpdateReq()
         {
-            var data = await _userRepo.GetQueryable().Where(x => x.Id == id).SingleOrDefaultAsync();
-            var ResetPass = new PasswordUpdateReq()
-            {
-                Id = data.Id
-            };
-            return View(ResetPass);
-        }
-    
+            Id = data.Id
+        };
+        return View(ResetPass);
+    }
+
     [HttpPost]
     public async Task<IActionResult> UpdatePassword(long id, PasswordUpdateReq req)
     {
@@ -159,15 +157,16 @@ public class UserController : Controller
                 OldPassword = req.OldPassword,
                 NewPassword = req.NewPassword
             };
-            
-            
+
+
             var user = await _userRepo.FindOrThrowAsync(vm.Id);
-            await _userService.UpdatePassword(user,vm.OldPassword,vm.NewPassword);
+            await _userService.UpdatePassword(user, vm.OldPassword, vm.NewPassword);
             return RedirectToAction(nameof(Index));
         }
         catch (Exception e)
         {
-            return this.SendError(e.Message);
+            _notificationHelper.SetErrorMsg(e.Message);
+            return View(req);
         }
     }
 }
