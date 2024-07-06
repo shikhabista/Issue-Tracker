@@ -30,7 +30,7 @@ public class LoginController : Controller
         try
         {
             await _authService.Login(req.Username, req.Password);
-            return RedirectToAction(nameof(Index), nameof(Index), new {Area = "Admin"});
+            return RedirectToRoute(new { action = "Index", controller = "Repository", area = "IT" });
         }
         catch (Exception e)
         {

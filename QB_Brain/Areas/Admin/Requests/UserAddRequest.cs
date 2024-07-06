@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace IT_Web.Areas.Admin.Requests;
 
 public class UserAddRequest

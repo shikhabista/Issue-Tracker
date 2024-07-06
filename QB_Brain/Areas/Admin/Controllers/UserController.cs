@@ -70,9 +70,23 @@ public class UserController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(UserAddRequest req)
     {
+        
         var confirmpass = req.ConfirmPassword;
         try
         {
+            var n = req.Name.Split();
+            bool isNumber = false;
+            foreach (var nu in n)
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    if (nu == $"{i}")
+                    {
+                        isNumber = true;
+                    }  
+                }
+            }
+            if(isNumber) throw new Exception("Number is not allowed");
             if (!req.Password.Equals(confirmpass)) throw new Exception("Confirm password did not match");
             var branchId = await _currentUserProvider.GetUserBranchId();
             var userDto = new UserAddDto()

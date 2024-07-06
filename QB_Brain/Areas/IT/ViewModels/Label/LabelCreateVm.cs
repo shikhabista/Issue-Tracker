@@ -8,8 +8,8 @@ public class LabelCreateVm
     public string Name { get; set; }
     [Required(ErrorMessage = "Label Code is required")]
 
-    public string Code { get; set; }
+    public string? Code { get; set; }
     public string? Description { get; set; }
 
-    public List<Base.Entities.Label> Labels { get; set; }
+    public List<Base.Entities.Label>? Labels { get; set; }
 }
