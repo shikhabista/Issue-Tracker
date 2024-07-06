@@ -15,6 +15,8 @@
                 <div class="col-3">
                     <label class="form-label required" for="">Name</label>
                     <input class="form-control" type="text" asp-for="Name" placeholder="Label name">
+                    <span asp-validation-for="Name" class="text-red"></span>
+
                 </div>
                 <div class="col-3">
                     <label class="form-label" for="">Description</label>
@@ -23,6 +25,7 @@
                 <div class="col-3">
                     <label class="form-label required" for="">Code</label>
                     <input class="form-control" type="text" asp-for="Code" placeholder="Label code">
+                    <span asp-validation-for="Code" class="text-red"></span>
                 </div>
                 <div class="col-3 mt-3">
                     <button type="submit" class="btn btn-primary" asp-action="New"> Create Label</button>

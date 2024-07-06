@@ -56,6 +56,7 @@ public class RepositoryController : Controller
     {
         try
         {
+            if (!ModelState.IsValid) return View(model);
             var userId = _currentUserProvider.GetUserId();
             var visibility = model.IsPrivate != null ? Repository.Private : Repository.Public;
             var isDuplicate = await _repositoryService.CheckIfDuplicateName(model.Name.ToLower().Trim());

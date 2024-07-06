@@ -46,6 +46,7 @@ public class LabelController : Controller
     {
         try
         {
+            if (!ModelState.IsValid) return View(vm);
             var isDuplicate = await _labelService.CheckIfDuplicateName(vm.Code.ToLower().Trim());
             if (isDuplicate) throw new Exception($"Label Code {vm.Code} already exists.");
             var label = new Label

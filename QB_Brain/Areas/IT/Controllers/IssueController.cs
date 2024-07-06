@@ -74,6 +74,7 @@ public class IssueController : Controller
     {
         try
         {
+            if (!ModelState.IsValid) return View(vm);
             var issueCreateDto = new IssueCreateDto
             {
                 Title = vm.Title,
@@ -146,6 +147,7 @@ public class IssueController : Controller
     {
         try
         {
+            if (!ModelState.IsValid) return View(vm);
             var issueEditDto = new IssueDto
             {
                 id = vm.Id,
