@@ -12,4 +12,6 @@ public class IssueEditVm
     public long RepositoryId { get; set; }
     public SelectList LabelList { get; set; }
     public List<long>? LabelIds { get; set; }
+    public long UserId { get; set; }
+    public SelectList UserList { get; set; }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Transactions;
 using Base.Dtos;
-using Base.Dtos.IT;
 using Base.Dtos.IT.Issue;
 using Base.Entities;
 using Base.Services.Interfaces;
@@ -33,6 +32,15 @@ public class RepositoryService : IRepositoryService
         return repository;
     }
 
+    public async Task<bool> CheckIfDuplicateName(string name)
+    {
+        using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+        var repository = await _dbService.GetAsync<Repository>($"SELECT * FROM it.repository where lower(name) like '{@name.ToLower()}'", new { name });
+        tx.Complete();
+        bool isDuplicate = repository != null;
+        return isDuplicate;
+    }
+
     public async Task<List<RepositoryDto>> GetRepositoryList()
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
@@ -54,7 +62,7 @@ public class RepositoryService : IRepositoryService
     public async Task<bool> DeleteRepository(long id)
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-        await _dbService.ExecuteQuery("DELETE FROM it.repository WHERE id=@Id", new {id});
+        await _dbService.ExecuteQuery("DELETE FROM it.repository WHERE id=@Id", new { id });
         tx.Complete();
         return true;
     }
@@ -70,15 +78,20 @@ public class RepositoryService : IRepositoryService
             {
                 repositoryId = item.Id
             })).ToList();
-            
+
             var aa = issueList.Count(a => a.issue_status == 1);
             var bb = issueList.Count(a => a.issue_status == 2);
             var ab = issueList.Count;
-            
+
             item.TotalOpenIssuesCount = aa;
             item.TotalClosedIssuesCount = bb;
             item.TotalIssuesCount = ab;
+            
+            var userQuery = "select name from base.user where id = @userId;";
+            var userName = await _dbService.GetAsync<string>(userQuery, new { userId = item.rec_by_id });
+            item.RecBy = userName;
         }
+
         tx.Complete();
         return repositoryList;
     }

@@ -1,6 +1,7 @@
 ﻿using Base.Dtos.IT.Issue;
 using Base.Entities;
 using Base.Enums;
+using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels.Issue;
 using IT_Web.Extensions;
@@ -17,13 +18,15 @@ public class IssueController : Controller
     private readonly IIssueService _issueService;
     private readonly ILabelService _labelService;
     private readonly IIssueLabelService _issueLabelService;
+    private readonly IUserRepo _userRepo;
 
-    public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService, IIssueLabelService issueLabelService)
+    public IssueController(ILogger<IssueController> logger, IIssueService issueService, ILabelService labelService, IIssueLabelService issueLabelService, IUserRepo userRepo)
     {
         _logger = logger;
         _issueService = issueService;
         _labelService = labelService;
         _issueLabelService = issueLabelService;
+        _userRepo = userRepo;
     }
 
     [HttpGet]
@@ -52,9 +55,11 @@ public class IssueController : Controller
     {
         if (!ModelState.IsValid) return View();
         var labels = await _labelService.GetLabelList();
+        var users = await _userRepo.FindAllAsync();
         var vm = new IssueCreateVm
         {
             LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name)),
+            UserList = new SelectList(users, nameof(Base.Entities.User.Id), nameof(Base.Entities.User.Name)),
             RepositoryId = repositoryId
         };
         return View(vm);
@@ -73,7 +78,8 @@ public class IssueController : Controller
                 Date = DateTime.Now,
                 RepositoryId = vm.RepositoryId,
                 LastUpdated = DateTime.Now,
-                LabelIds = vm.LabelIds
+                LabelIds = vm.LabelIds,
+                AssigneeId = vm.UserId
             };
             var issue = await _issueService.CreateIssue(issueCreateDto);
 
@@ -91,7 +97,7 @@ public class IssueController : Controller
                 }
             }
 
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
         catch (Exception e)
         {
@@ -107,6 +113,7 @@ public class IssueController : Controller
         {
             var issue = await _issueService.GetIssue(id);
             var labels = await _labelService.GetLabelList();
+            var users = await _userRepo.FindAllAsync();
             var labelIds = await _issueLabelService.GetLabelIdsOf(id);
             var vm = new IssueEditVm
             {
@@ -118,6 +125,8 @@ public class IssueController : Controller
                 Date = issue.date,
                 LabelIds = labelIds,
                 LabelList = new SelectList(labels, nameof(Label.Id), nameof(Label.Name)),
+                UserList = new SelectList(users, nameof(Base.Entities.User.Id), nameof(Base.Entities.User.Name)),
+                UserId = issue.assignee_id
             };
             return View(vm);
         }
@@ -142,9 +151,10 @@ public class IssueController : Controller
                 date = DateTime.Now,
                 repository_id = vm.RepositoryId,
                 last_updated = DateTime.Now,
+                assignee_id = vm.UserId
             };
             var issue = await _issueService.UpdateIssue(issueEditDto);
-            
+
             await _issueLabelService.RemoveIssueLabel(vm.Id);
             if (vm.LabelIds != null)
             {
@@ -160,7 +170,7 @@ public class IssueController : Controller
                 }
             }
 
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", vm.RepositoryId });
         }
         catch (Exception e)
         {
@@ -175,7 +185,7 @@ public class IssueController : Controller
         try
         {
             await _issueService.OpenIssue(id);
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
         }
         catch (Exception e)
         {
@@ -190,7 +200,7 @@ public class IssueController : Controller
         try
         {
             await _issueService.CloseIssue(id);
-            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId});
+            return RedirectToRoute(new { action = "Index", controller = "Issue", area = "IT", repositoryId });
         }
         catch (Exception e)
         {

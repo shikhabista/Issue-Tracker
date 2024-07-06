@@ -3,7 +3,7 @@ using Base.Entities.Interfaces;
 
 namespace Base.Entities;
 
-[Table("branch", Schema = "Base")]
+[Table("branch", Schema = "base")]
 public class Branch : BranchMiniInfo, IBaseEntity
 {
     public BranchMiniInfo ToMiniInfo => new BranchMiniInfo

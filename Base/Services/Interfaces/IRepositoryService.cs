@@ -11,4 +11,5 @@ public interface IRepositoryService
     Task<Repository> UpdateRepository(Repository repository);
     Task<bool> DeleteRepository(long id);
     Task<List<RepositoryDto>> GetData();
+    Task<bool> CheckIfDuplicateName(string name);
 }

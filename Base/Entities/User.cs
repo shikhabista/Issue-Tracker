@@ -3,7 +3,7 @@ using Base.Entities.Interfaces;
 
 namespace Base.Entities;
 
-[Table("user", Schema = "Base")]
+[Table("user", Schema = "base")]
 public class User : IBaseEntity
 {
     public long Id { get; set; }

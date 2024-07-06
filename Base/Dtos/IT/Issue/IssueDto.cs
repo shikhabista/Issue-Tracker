@@ -11,4 +11,5 @@ public class IssueDto
     public DateTime date { get; set; }
     public long issue_status { get; set; }
     public DateTime last_updated { get; set; }
+    public string assignee { get; set; }
 }

@@ -15,6 +15,7 @@
                 <thead>
                 <tr>
                     <th>Issue</th>
+                    <th>Assignee</th>
                     <th>Issue Status</th>
                     <th>Action</th>
                 </tr>
@@ -35,6 +36,7 @@
                                 <span class="badge bg-azure-lt"> @label</span>
                             }
                         </td>
+                        <td>@item.assignee</td>
                         @if (item.issue_status == 1)
                         {
                             <td> Open </td>

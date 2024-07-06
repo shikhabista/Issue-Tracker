@@ -1,4 +1,5 @@
 ﻿using Base.Entities;
+using Base.Services;
 using Base.Services.Interfaces;
 using IT_Web.Areas.IT.VIewModels.Label;
 using IT_Web.Extensions;
@@ -12,11 +13,13 @@ public class LabelController : Controller
 {
     private readonly ILogger<LabelController> _logger;
     private readonly ILabelService _labelService;
+    private readonly IIssueLabelService _issueLabelService;
 
-    public LabelController(ILogger<LabelController> logger, ILabelService labelService)
+    public LabelController(ILogger<LabelController> logger, ILabelService labelService, IIssueLabelService issueLabelService)
     {
         _logger = logger;
         _labelService = labelService;
+        _issueLabelService = issueLabelService;
     }
 
     [HttpGet]
@@ -40,6 +43,8 @@ public class LabelController : Controller
     {
         try
         {
+            var isDuplicate = await _labelService.CheckIfDuplicateName(vm.Code.ToLower().Trim());
+            if (isDuplicate) throw new Exception($"Label Code {vm.Code} already exists.");
             var label = new Label
             {
                 Name = vm.Name,
@@ -84,6 +89,8 @@ public class LabelController : Controller
     {
         try
         {
+            var issueLabel = await _issueLabelService.CheckIfLabelInUse(id);
+            if (issueLabel) throw new Exception("Can't delete label. Label is assigned to an issue");
             await _labelService.DeleteLabel(id);
             return RedirectToAction(nameof(New));
         }

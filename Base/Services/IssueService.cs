@@ -1,6 +1,7 @@
 ﻿using System.Transactions;
 using Base.Dtos;
 using Base.Dtos.IT.Issue;
+using Base.Entities;
 using Base.Repo.Interfaces;
 using Base.Services.Interfaces;
 
@@ -25,7 +26,7 @@ public class IssueService : IIssueService
         var query = "INSERT INTO it.issue (title, description, issue_status, date,repository_id, assignee_id, last_updated) " +
                     "VALUES (@Title, @Description, @IssueStatus, @Date,@RepositoryId, @AssigneeId, @LastUpdated)"
                     + "Returning *";
-        var createdIssue = await _dbService.CreateAndReturn<IssueDto>(query, issue);
+        var createdIssue = await _dbService.QuerySingleOrDefaultAsync<IssueDto>(query, issue);
         tx.Complete();
         return createdIssue;
     }
@@ -50,7 +51,7 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         await _dbService.ExecuteQuery("Update it.issue SET title=@title, description=@description, issue_status=@issue_status, " +
-                                      "date=@date, repository_id=@repository_id, last_updated=@last_updated WHERE id=@id",
+                                      "date=@date, repository_id=@repository_id, last_updated=@last_updated, assignee_id=@assignee_id WHERE id=@id",
             dto);
         tx.Complete();
         return dto;
@@ -76,10 +77,10 @@ public class IssueService : IIssueService
     {
         using var tx = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
         var query = $"select * from it.issue where repository_id = @repositoryId;";
-        var list = (await _dbService.GetAll<IssueDto>(query, new
+        var list = await _dbService.GetAll<IssueDto>(query, new
         {
             repositoryId
-        })).ToList();
+        });
         var repository = await _dbService.GetAsync<RepositoryDto>("SELECT * FROM it.repository where id=@repositoryId",
             new { repositoryId });
         var repoName = repository.Name;
@@ -89,6 +90,10 @@ public class IssueService : IIssueService
             var issueLabelQuery = $"select l.name from it.issue_label il join it.label l on il.label_id = l.id where issue_id = @id";
             var labelNames = await _dbService.GetAll<string>(issueLabelQuery, new { id = item.id });
             item.label_names = labelNames;
+            
+            var userName = await _dbService.GetAsync<string>("SELECT name FROM base.user where id=@userId",
+                new { userId = item.assignee_id });
+            item.assignee = userName;
         }
 
         return (list, repoName);

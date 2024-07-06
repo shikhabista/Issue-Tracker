@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Base.Entities;
 
-[Table("organization_info", Schema = "Base")]
+[Table("organization_info", Schema = "base")]
 public class Organization
 {
     public const string FileDir = "Organization";
