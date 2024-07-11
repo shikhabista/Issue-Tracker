@@ -39,10 +39,6 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\dist\jquery-confirm\jquery-confirm.min.css" />
       <_ContentIncludedByDefault Remove="wwwroot\dist\jquery-confirm\jquery-confirm.min.js" />
-      <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Areas\Qb\Views\AccountGroup\New.cshtml" />
-      <_ContentIncludedByDefault Remove="Areas\Admin\Views\User\Index.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
